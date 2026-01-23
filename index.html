@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diana & Robert | June 4, 2027</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #ebe6dd;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .venue-illustration {
+            width: 280px;
+            max-width: 100%;
+            margin-bottom: 35px;
+        }
+
+        .save-the-date {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #4a4a4a;
+            margin-bottom: 25px;
+        }
+
+        .for-the-wedding {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #6a6a6a;
+            margin-bottom: 25px;
+        }
+
+        .name {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+        }
+
+        .ampersand {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #4a4a4a;
+            font-size: 1.6rem;
+            margin: 15px 0;
+        }
+
+        .date {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            color: #3d3d3d;
+            margin-top: 35px;
+        }
+
+        .venue {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+
+        .details-coming {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #7a7a7a;
+            margin-top: 40px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4c4c4;
+            margin: 30px auto;
+        }
+
+        /* Mobile (default) */
+        @media (max-width: 480px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            .venue-illustration {
+                width: 220px;
+                margin-bottom: 25px;
+            }
+
+            .save-the-date {
+                font-size: 0.7rem;
+                letter-spacing: 4px;
+                margin-bottom: 20px;
+            }
+
+            .for-the-wedding {
+                font-size: 0.6rem;
+                letter-spacing: 3px;
+                margin-bottom: 20px;
+            }
+
+            .name {
+                font-size: 1rem;
+                letter-spacing: 4px;
+            }
+
+            .ampersand {
+                font-size: 1.2rem;
+                margin: 12px 0;
+            }
+
+            .date {
+                font-size: 0.85rem;
+                letter-spacing: 3px;
+                margin-top: 25px;
+            }
+
+            .divider {
+                margin: 20px auto;
+            }
+
+            .venue {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+                margin-top: 20px;
+            }
+
+            .details-coming {
+                font-size: 0.85rem;
+                margin-top: 30px;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .venue-illustration {
+                width: 300px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            body {
+                padding: 60px 40px;
+            }
+
+            .container {
+                max-width: 600px;
+            }
+
+            .venue-illustration {
+                width: 340px;
+                margin-bottom: 45px;
+            }
+
+            .save-the-date {
+                font-size: 0.9rem;
+                letter-spacing: 6px;
+                margin-bottom: 30px;
+            }
+
+            .for-the-wedding {
+                font-size: 0.75rem;
+                letter-spacing: 5px;
+                margin-bottom: 30px;
+            }
+
+            .name {
+                font-size: 1.8rem;
+                letter-spacing: 10px;
+            }
+
+            .ampersand {
+                font-size: 2rem;
+                margin: 20px 0;
+            }
+
+            .date {
+                font-size: 1.2rem;
+                letter-spacing: 5px;
+                margin-top: 45px;
+            }
+
+            .divider {
+                width: 50px;
+                margin: 40px auto;
+            }
+
+            .venue {
+                font-size: 0.8rem;
+                letter-spacing: 4px;
+                margin-top: 30px;
+            }
+
+            .details-coming {
+                font-size: 1.1rem;
+                margin-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="venue.png" alt="Pestana Palácio do Freixo" class="venue-illustration">
+
+        <p class="save-the-date">Save the Date</p>
+
+        <p class="for-the-wedding">For the Wedding of</p>
+
+        <h1>
+            <span class="name">Diana Luplow</span>
+            <p class="ampersand">and</p>
+            <span class="name">Robert Del Prete</span>
+        </h1>
+
+        <p class="date">June 4, 2027</p>
+
+        <div class="divider"></div>
+
+        <p class="venue">
+            Pestana Palácio do Freixo<br>
+            Porto, Portugal
+        </p>
+
+        <p class="details-coming">Formal invitation to follow</p>
+    </div>
+</body>
+</html>
