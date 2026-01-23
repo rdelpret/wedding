@@ -14,16 +14,11 @@
             box-sizing: border-box;
         }
 
-        html {
+        html, body {
             overflow-x: hidden;
-            overscroll-behavior-x: none;
-        }
-
-        body {
-            overflow-x: hidden;
-            overscroll-behavior-x: none;
-            position: relative;
+            overscroll-behavior: none;
             width: 100%;
+            max-width: 100%;
         }
 
         body {
@@ -38,7 +33,11 @@
 
         .container {
             text-align: center;
+            width: 100%;
             max-width: 500px;
+            padding: 0 10px;
+            overflow: hidden;
+            word-wrap: break-word;
         }
 
         .venue-illustration {
