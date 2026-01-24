@@ -341,6 +341,28 @@
 
         .modal-close:hover {
             color: #3d3d3d;
+        }
+
+        .hunt-tab {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(245, 240, 230, 0.95);
+            border: 1px solid #c4b59d;
+            border-left: none;
+            padding: 8px 2px;
+            cursor: pointer;
+            z-index: 499;
+            font-size: 0.6rem;
+            writing-mode: vertical-rl;
+            font-family: 'Josefin Sans', sans-serif;
+            letter-spacing: 1px;
+            color: #5a5a5a;
+        }
+
+        .hunt-tab:hover {
+            background-color: #c4b59d;
             color: #fff;
         }
 
@@ -557,7 +579,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.27</span>
+        <span class="version">v.0.1.28</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -608,6 +630,9 @@
     <div class="music-player" id="ghostPlayer">
         <button class="play-btn" id="ghostBtn">👻</button>
     </div>
+
+    <!-- Hunt Tab -->
+    <div class="hunt-tab" id="huntTab">?</div>
 
     <!-- Admin Modal -->
     <div class="modal-overlay" id="adminModal">
@@ -867,6 +892,9 @@
         });
         document.getElementById('huntClose').addEventListener('click', () => {
             document.getElementById('huntModal').classList.remove('active');
+        });
+        document.getElementById('huntTab').addEventListener('click', () => {
+            document.getElementById('huntModal').classList.toggle('active');
         });
         // Close modals with Escape key
         document.addEventListener('keydown', (e) => {
