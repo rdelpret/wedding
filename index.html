@@ -368,7 +368,19 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.28/build/Midi.min.js"></script>
     <script>
+        let midiData = null;
+        let isPlaying = false;
+        let synths = [];
+
+        // Load MIDI file
+        fetch('bridal-march.mid')
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                midiData = new Midi(data);
+            });
+
         // Easter egg: type "ring" to reveal music player and play opening phrase
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
@@ -379,45 +391,44 @@
                 typedKeys = '';
                 // Play opening phrase once
                 await Tone.start();
-                playMelody();
+                playMidi(false);
             }
         });
 
-        // Bridal Chorus melody using Tone.js
-        const synth = new Tone.PolySynth(Tone.Synth, {
-            oscillator: { type: 'triangle' },
-            envelope: { attack: 0.01, decay: 0.05, sustain: 0.1, release: 0.2 }
-        }).toDestination();
-        synth.volume.value = -6;
+        function playMidi(loop = false) {
+            if (!midiData) return;
 
-        // Here Comes the Bride melody (Bridal Chorus from Lohengrin)
-        const melody = [
-            { note: 'C4', duration: '8n', time: 0 },
-            { note: 'F4', duration: '4n', time: 0.3 },
-            { note: 'F4', duration: '16n', time: 0.8 },
-            { note: 'F4', duration: '8n', time: 0.95 },
-            { note: 'C4', duration: '8n', time: 1.5 },
-            { note: 'F4', duration: '4n', time: 1.8 },
-            { note: 'E4', duration: '16n', time: 2.3 },
-            { note: 'G4', duration: '8n', time: 2.45 },
-            { note: 'F4', duration: '8n', time: 3 },
-            { note: 'A4', duration: '4n', time: 3.3 },
-            { note: 'G4', duration: '16n', time: 3.8 },
-            { note: 'A4', duration: '8n', time: 3.95 },
-            { note: 'Bb4', duration: '8n', time: 4.5 },
-            { note: 'A4', duration: '16n', time: 4.8 },
-            { note: 'G4', duration: '16n', time: 5 },
-            { note: 'F4', duration: '4n', time: 5.2 },
-        ];
+            // Stop any existing synths
+            synths.forEach(s => s.disconnect());
+            synths = [];
 
-        let isPlaying = false;
-        let loopId = null;
-
-        function playMelody() {
             const now = Tone.now();
-            melody.forEach(({ note, duration, time }) => {
-                synth.triggerAttackRelease(note, duration, now + time);
+
+            midiData.tracks.forEach(track => {
+                const synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
+                }).toDestination();
+                synth.volume.value = -10;
+                synths.push(synth);
+
+                track.notes.forEach(note => {
+                    synth.triggerAttackRelease(
+                        note.name,
+                        note.duration,
+                        now + note.time,
+                        note.velocity
+                    );
+                });
             });
+        }
+
+        function stopMidi() {
+            synths.forEach(s => {
+                s.releaseAll();
+                s.disconnect();
+            });
+            synths = [];
         }
 
         document.getElementById('playBtn').addEventListener('click', async () => {
@@ -425,17 +436,11 @@
             const btn = document.getElementById('playBtn');
 
             if (isPlaying) {
-                Tone.Transport.stop();
-                Tone.Transport.cancel();
+                stopMidi();
                 btn.textContent = 'Play Music';
                 isPlaying = false;
             } else {
-                Tone.Transport.scheduleRepeat((time) => {
-                    melody.forEach(({ note, duration, time: noteTime }) => {
-                        synth.triggerAttackRelease(note, duration, time + noteTime);
-                    });
-                }, 10);
-                Tone.Transport.start();
+                playMidi(true);
                 btn.textContent = 'Stop Music';
                 isPlaying = true;
             }
