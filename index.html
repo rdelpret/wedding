@@ -142,6 +142,34 @@
             color: #aaa;
         }
 
+        .music-player {
+            position: fixed;
+            bottom: 10px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .play-btn {
+            background: none;
+            border: 1px solid #c4b59d;
+            color: #5a5a5a;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.55rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .play-btn:hover {
+            background-color: #c4b59d;
+            color: #fff;
+        }
+
         .nav {
             position: fixed;
             top: 0;
@@ -327,5 +355,29 @@
 
     </div>
     <span class="webmaster">Webmaster: Robert DelPrete</span>
+
+    <div class="music-player">
+        <button class="play-btn" onclick="toggleMusic()">Play Music</button>
+    </div>
+    <audio id="wedding-music" loop>
+        <source src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Wagner_-_Bridal_Chorus_from_Lohengrin.ogg" type="audio/ogg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('wedding-music');
+        const btn = document.querySelector('.play-btn');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                btn.textContent = 'Play Music';
+            } else {
+                music.play();
+                btn.textContent = 'Stop Music';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
 </body>
 </html>
