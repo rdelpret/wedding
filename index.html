@@ -368,79 +368,68 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.28/build/Midi.min.js"></script>
     <script>
-        let midiData = null;
         let isPlaying = false;
-        let synths = [];
+        let synth = null;
         let delay = null;
+        let sequence = null;
 
-        // Load MIDI file
-        fetch('bridal-march.mid')
-            .then(response => response.arrayBuffer())
-            .then(data => {
-                midiData = new Midi(data);
-                console.log('MIDI loaded:', midiData.tracks.length, 'tracks');
-            })
-            .catch(err => console.error('MIDI load error:', err));
+        // Bridal March / Here Comes the Bride - Wagner
+        // Key of Bb major, simplified melody
+        const bridalMarch = [
+            ['Bb3', '4n'], [null, '8n'], ['Bb3', '8n'],
+            ['Bb3', '2n'],
+            ['Bb3', '4n'], [null, '8n'], ['A3', '8n'],
+            ['Bb3', '4n'], ['C4', '4n'],
+            ['D4', '2n'],
+            ['D4', '4n'], [null, '8n'], ['D4', '8n'],
+            ['D4', '4n'], ['C4', '4n'],
+            ['Bb3', '4n'], ['A3', '4n'],
+            ['Bb3', '2n'],
+        ];
 
-        // Easter egg: type "ring" to reveal music player and play opening phrase
+        // Easter egg: type "ring" to reveal music player and play
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
+            if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
             if (typedKeys.length > 4) typedKeys = typedKeys.slice(-4);
             if (typedKeys === 'ring') {
                 document.getElementById('musicPlayer').classList.add('visible');
                 typedKeys = '';
                 await Tone.start();
-                playMidi();
+                playBridalMarch();
             }
         });
 
-        function playMidi() {
-            if (!midiData) {
-                console.log('No MIDI data');
-                return;
-            }
-
-            // Stop any existing synths
-            stopMidi();
-
-            // Create delay effect after Tone is started
-            if (!delay) {
+        async function playBridalMarch() {
+            if (!synth) {
                 delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
                 delay.wet.value = 0.25;
-            }
 
-            const now = Tone.now() + 0.1;
-
-            midiData.tracks.forEach((track, i) => {
-                if (track.notes.length === 0) return;
-
-                const synth = new Tone.PolySynth(Tone.Synth, {
+                synth = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
                     envelope: { attack: 0.005, decay: 0.2, sustain: 0.1, release: 0.3 }
                 }).connect(delay);
-                synth.volume.value = -12;
-                synths.push(synth);
+                synth.volume.value = -8;
+            }
 
-                track.notes.forEach(note => {
-                    synth.triggerAttackRelease(
-                        note.name,
-                        note.duration,
-                        now + note.time,
-                        note.velocity
-                    );
-                });
+            const now = Tone.now();
+            let time = now;
+
+            bridalMarch.forEach(([note, dur]) => {
+                const seconds = Tone.Time(dur).toSeconds();
+                if (note) {
+                    synth.triggerAttackRelease(note, dur, time);
+                }
+                time += seconds;
             });
         }
 
-        function stopMidi() {
-            synths.forEach(s => {
-                s.releaseAll();
-                s.disconnect();
-            });
-            synths = [];
+        function stopMusic() {
+            if (synth) {
+                synth.triggerRelease();
+            }
         }
 
         document.getElementById('playBtn').addEventListener('click', async () => {
@@ -448,11 +437,11 @@
             const btn = document.getElementById('playBtn');
 
             if (isPlaying) {
-                stopMidi();
+                stopMusic();
                 btn.textContent = 'Play Music';
                 isPlaying = false;
             } else {
-                playMidi();
+                playBridalMarch();
                 btn.textContent = 'Stop Music';
                 isPlaying = true;
             }
