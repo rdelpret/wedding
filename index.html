@@ -434,7 +434,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.f5a5dd0</span>
+        <span class="version">v.21c081b</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1139,7 +1139,6 @@
 
         // Swirlbridge - the ultimate chiptune dub experience
         let swirlBass = null;
-        let swirlLead = null;
         let swirlArp = null;
         let swirlArpFilter = null;
         let swirlKick = null;
@@ -1147,10 +1146,6 @@
         let swirlPlaying = false;
 
         const swirlBassPat = ['E1', 'E1', 'G1', 'A1', 'E1', 'E1', 'B1', 'A1'];
-        const swirlLeadPat = [
-            'E4', 'G4', 'B4', 'E5', 'D5', 'B4', 'G4', 'E4',
-            'A4', 'C5', 'E5', 'A5', 'G5', 'E5', 'C5', 'A4',
-        ];
         const swirlArpPat = ['E3', 'G3', 'B3', 'E4', 'G4', 'B4', 'E5', 'B4', 'G4', 'E4', 'B3', 'G3'];
 
         function spawnSpirals() {
@@ -1180,17 +1175,6 @@
                     envelope: { attack: 0.01, decay: 0.3, sustain: 0.8, release: 0.5 }
                 }).connect(bassFilter);
                 swirlBass.volume.value = -4;
-
-                // Chiptune lead with dub delay
-                const dubDelay = new Tone.PingPongDelay('4n.', 0.6).toDestination();
-                dubDelay.wet.value = 0.35;
-                const bitcrush = new Tone.BitCrusher(4).connect(dubDelay);
-
-                swirlLead = new Tone.Synth({
-                    oscillator: { type: 'square' },
-                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.1 }
-                }).connect(bitcrush);
-                swirlLead.volume.value = -14;
 
                 // Filtered arp - sawtooth with scheduled filter sweep
                 swirlArpFilter = new Tone.Filter(200, 'lowpass', -24).toDestination();
@@ -1231,13 +1215,6 @@
                 swirlBassPat.forEach((note, i) => {
                     swirlBass.triggerAttackRelease(note, '8n', barStart + (i * eighth));
                 });
-
-                // Lead melody (8th notes, every other bar)
-                if (bar % 2 === 0) {
-                    swirlLeadPat.forEach((note, i) => {
-                        swirlLead.triggerAttackRelease(note, '16n', barStart + (i * sixteenth));
-                    });
-                }
 
                 // Filtered arp with sweep
                 const sweepUp = barStart;
