@@ -434,7 +434,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.19fd1fa</span>
+        <span class="version">v.f5a5dd0</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1141,8 +1141,7 @@
         let swirlBass = null;
         let swirlLead = null;
         let swirlArp = null;
-        let swirlArp2 = null;
-        let swirlArp2Filter = null;
+        let swirlArpFilter = null;
         let swirlKick = null;
         let swirlSnare = null;
         let swirlPlaying = false;
@@ -1152,8 +1151,7 @@
             'E4', 'G4', 'B4', 'E5', 'D5', 'B4', 'G4', 'E4',
             'A4', 'C5', 'E5', 'A5', 'G5', 'E5', 'C5', 'A4',
         ];
-        const swirlArpPat = ['E5', 'B5', 'G5', 'E6', 'B5', 'G5', 'E5', 'B4'];
-        const swirlArp2Pat = ['E3', 'G3', 'B3', 'E4', 'G4', 'B4', 'E5', 'B4', 'G4', 'E4', 'B3', 'G3'];
+        const swirlArpPat = ['E3', 'G3', 'B3', 'E4', 'G4', 'B4', 'E5', 'B4', 'G4', 'E4', 'B3', 'G3'];
 
         function spawnSpirals() {
             for (let i = 0; i < 60; i++) {
@@ -1194,25 +1192,14 @@
                 }).connect(bitcrush);
                 swirlLead.volume.value = -14;
 
-                // Fast chiptune arp
-                const arpDelay = new Tone.FeedbackDelay('16n', 0.3).toDestination();
-                arpDelay.wet.value = 0.2;
-                const arpCrush = new Tone.BitCrusher(6).connect(arpDelay);
+                // Filtered arp - sawtooth with scheduled filter sweep
+                swirlArpFilter = new Tone.Filter(200, 'lowpass', -24).toDestination();
 
                 swirlArp = new Tone.Synth({
-                    oscillator: { type: 'pulse', width: 0.25 },
-                    envelope: { attack: 0.001, decay: 0.05, sustain: 0.1, release: 0.05 }
-                }).connect(arpCrush);
-                swirlArp.volume.value = -16;
-
-                // Second arp - sawtooth with scheduled filter sweep
-                swirlArp2Filter = new Tone.Filter(200, 'lowpass', -24).toDestination();
-
-                swirlArp2 = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
                     envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.2 }
-                }).connect(swirlArp2Filter);
-                swirlArp2.volume.value = -10;
+                }).connect(swirlArpFilter);
+                swirlArp.volume.value = -10;
 
                 // Kick drum
                 swirlKick = new Tone.MembraneSynth({
@@ -1252,25 +1239,18 @@
                     });
                 }
 
-                // Fast arp (16th notes)
-                for (let rep = 0; rep < 2; rep++) {
-                    swirlArpPat.forEach((note, i) => {
-                        swirlArp.triggerAttackRelease(note, '32n', barStart + (rep * 8 * sixteenth) + (i * sixteenth));
-                    });
-                }
-
-                // Second arp - slower, filtered sawtooth with manual sweep
+                // Filtered arp with sweep
                 const sweepUp = barStart;
                 const sweepPeak = barStart + (4 * eighth);
                 const sweepDown = barStart + (8 * eighth);
 
-                swirlArp2Filter.frequency.cancelScheduledValues(sweepUp);
-                swirlArp2Filter.frequency.setValueAtTime(200, sweepUp);
-                swirlArp2Filter.frequency.exponentialRampToValueAtTime(3000, sweepPeak);
-                swirlArp2Filter.frequency.exponentialRampToValueAtTime(200, sweepDown);
+                swirlArpFilter.frequency.cancelScheduledValues(sweepUp);
+                swirlArpFilter.frequency.setValueAtTime(200, sweepUp);
+                swirlArpFilter.frequency.exponentialRampToValueAtTime(3000, sweepPeak);
+                swirlArpFilter.frequency.exponentialRampToValueAtTime(200, sweepDown);
 
-                swirlArp2Pat.forEach((note, i) => {
-                    swirlArp2.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
+                swirlArpPat.forEach((note, i) => {
+                    swirlArp.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
                 });
 
                 // Kick on 1 and 3
