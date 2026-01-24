@@ -463,7 +463,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.10</span>
+        <span class="version">v.0.1.11</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1262,12 +1262,12 @@
                 }
                 lastTap = now;
 
-                // 7 taps reveals all easter eggs
+                // 7 taps triggers heart/love
                 if (tapCount >= 7) {
                     tapCount = 0;
                     await Tone.start();
-                    document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
-                    playSwirlbridge();
+                    document.getElementById('heartPlayer').classList.add('visible');
+                    playLoveCharmer();
                 }
             }
 
