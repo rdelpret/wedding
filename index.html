@@ -162,6 +162,18 @@
             left: 60px;
         }
 
+        #lipsPlayer {
+            left: 105px;
+        }
+
+        #flowerPlayer {
+            left: 150px;
+        }
+
+        #cakePlayer {
+            left: 195px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -389,6 +401,15 @@
     <div class="music-player" id="heartPlayer">
         <button class="play-btn" id="loveBtn">❤️</button>
     </div>
+    <div class="music-player" id="lipsPlayer">
+        <button class="play-btn" id="lipsBtn">💋</button>
+    </div>
+    <div class="music-player" id="flowerPlayer">
+        <button class="play-btn" id="flowerBtn">🌸</button>
+    </div>
+    <div class="music-player" id="cakePlayer">
+        <button class="play-btn" id="cakeBtn">🎂</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
@@ -411,12 +432,34 @@
             'F5', 'D5', 'B4', 'G4', 'F4',
         ];
 
-        // Easter eggs: type "ring" or "love"
+        // Lips melody - playful kiss sounds, chromatic slides
+        const lipsMelody = [
+            'G5', 'F#5', 'G5', 'A5',
+            'G5', 'F#5', 'G5',
+            'B5', 'A5', 'G5',
+        ];
+
+        // Flower melody - delicate pentatonic bell tones
+        const flowerMelody = [
+            'C6', 'G5', 'E5', 'C5',
+            'D5', 'E5', 'G5',
+            'A5', 'G5', 'E5', 'D5', 'C5',
+        ];
+
+        // Cake melody - celebratory fanfare
+        const cakeMelody = [
+            'C4', 'C4', 'G4', 'G4',
+            'A4', 'A4', 'G4',
+            'F4', 'F4', 'E4', 'E4',
+            'D4', 'D4', 'C4',
+        ];
+
+        // Easter eggs: type "ring", "love", "lips", "flower", "cake"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 5) typedKeys = typedKeys.slice(-5);
+            if (typedKeys.length > 6) typedKeys = typedKeys.slice(-6);
 
             if (typedKeys.includes('ring')) {
                 document.getElementById('musicPlayer').classList.add('visible');
@@ -429,6 +472,24 @@
                 typedKeys = '';
                 await Tone.start();
                 playLoveCharmer();
+            }
+            if (typedKeys.includes('lips')) {
+                document.getElementById('lipsPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playLipsJingle();
+            }
+            if (typedKeys.includes('flower')) {
+                document.getElementById('flowerPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playFlowerJingle();
+            }
+            if (typedKeys.includes('cake')) {
+                document.getElementById('cakePlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playCakeJingle();
             }
         });
 
@@ -524,6 +585,141 @@
         document.getElementById('loveBtn').addEventListener('click', async () => {
             await Tone.start();
             playLoveCharmer();
+        });
+
+        // Lips - playful with vibrato and pitch slides
+        let lipsSynth = null;
+        let lipsVibrato = null;
+
+        function spawnLips() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const lips = document.createElement('div');
+                    lips.className = 'falling-ring';
+                    lips.textContent = '💋';
+                    lips.style.left = Math.random() * 100 + 'vw';
+                    lips.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(lips);
+                    setTimeout(() => lips.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playLipsJingle() {
+            if (!lipsSynth) {
+                lipsVibrato = new Tone.Vibrato(8, 0.3).toDestination();
+                const lipsDelay = new Tone.PingPongDelay('16n', 0.2).connect(lipsVibrato);
+                lipsDelay.wet.value = 0.3;
+
+                lipsSynth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.01, decay: 0.1, sustain: 0.3, release: 0.4 }
+                }).connect(lipsDelay);
+                lipsSynth.volume.value = -6;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * lipsMelody.length * eighth);
+                lipsMelody.forEach((note, i) => {
+                    lipsSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+                });
+            }
+            spawnLips();
+        }
+
+        document.getElementById('lipsBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playLipsJingle();
+        });
+
+        // Flower - delicate bells with reverb
+        let flowerSynth = null;
+
+        function spawnFlowers() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'falling-ring';
+                    flower.textContent = '🌸';
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    flower.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(flower);
+                    setTimeout(() => flower.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playFlowerJingle() {
+            if (!flowerSynth) {
+                const reverb = new Tone.Reverb({ decay: 2.5, wet: 0.5 }).toDestination();
+                await reverb.generate();
+                const chorus = new Tone.Chorus(4, 2.5, 0.5).connect(reverb);
+                chorus.start();
+
+                flowerSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.02, decay: 0.3, sustain: 0.2, release: 1.0 }
+                }).connect(chorus);
+                flowerSynth.volume.value = -8;
+            }
+
+            const sixteenth = Tone.Time('16n').toSeconds();
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * flowerMelody.length * sixteenth);
+                flowerMelody.forEach((note, i) => {
+                    flowerSynth.triggerAttackRelease(note, '8n', startTime + (i * sixteenth));
+                });
+            }
+            spawnFlowers();
+        }
+
+        document.getElementById('flowerBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playFlowerJingle();
+        });
+
+        // Cake - celebratory fanfare with brass-like sound
+        let cakeSynth = null;
+
+        function spawnCakes() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const cake = document.createElement('div');
+                    cake.className = 'falling-ring';
+                    cake.textContent = '🎂';
+                    cake.style.left = Math.random() * 100 + 'vw';
+                    cake.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(cake);
+                    setTimeout(() => cake.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playCakeJingle() {
+            if (!cakeSynth) {
+                const cakeDelay = new Tone.FeedbackDelay('8n', 0.15).toDestination();
+                cakeDelay.wet.value = 0.2;
+                const distortion = new Tone.Distortion(0.1).connect(cakeDelay);
+
+                cakeSynth = new Tone.Synth({
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.01, decay: 0.15, sustain: 0.4, release: 0.3 }
+                }).connect(distortion);
+                cakeSynth.volume.value = -10;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+            const startTime = Tone.now();
+            cakeMelody.forEach((note, i) => {
+                cakeSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+            });
+            spawnCakes();
+        }
+
+        document.getElementById('cakeBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playCakeJingle();
         });
     </script>
 </body>
