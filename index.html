@@ -274,20 +274,25 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: auto;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: transparent;
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            pointer-events: none;
         }
 
         .modal-overlay.active {
-            display: flex;
+            display: block;
         }
 
         .modal-content {
+            pointer-events: auto;
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             background-color: #f5f0e6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             padding: 30px 40px;
             max-width: 400px;
             max-height: 80vh;
@@ -551,7 +556,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.24</span>
+        <span class="version">v.0.1.25</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -862,13 +867,10 @@
         document.getElementById('huntClose').addEventListener('click', () => {
             document.getElementById('huntModal').classList.remove('active');
         });
-        document.getElementById('adminModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('adminModal')) {
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
                 document.getElementById('adminModal').classList.remove('active');
-            }
-        });
-        document.getElementById('huntModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('huntModal')) {
                 document.getElementById('huntModal').classList.remove('active');
             }
         });
