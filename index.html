@@ -364,28 +364,20 @@
     <span class="webmaster">Webmaster: Robert DelPrete</span>
 
     <div class="music-player" id="musicPlayer">
-        <button class="play-btn" id="playBtn">Play Music</button>
+        <button class="play-btn" id="playBtn">💍</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
-        let isPlaying = false;
         let synth = null;
         let delay = null;
         let sequence = null;
 
-        // Bridal March / Here Comes the Bride - Wagner
-        // Key of Bb major, simplified melody
-        const bridalMarch = [
-            ['Bb3', '4n'], [null, '8n'], ['Bb3', '8n'],
-            ['Bb3', '2n'],
-            ['Bb3', '4n'], [null, '8n'], ['A3', '8n'],
-            ['Bb3', '4n'], ['C4', '4n'],
-            ['D4', '2n'],
-            ['D4', '4n'], [null, '8n'], ['D4', '8n'],
-            ['D4', '4n'], ['C4', '4n'],
-            ['Bb3', '4n'], ['A3', '4n'],
-            ['Bb3', '2n'],
+        // C# major arpeggio up 3 octaves in 16th notes
+        const arpeggio = [
+            'C#3', 'F3', 'G#3',
+            'C#4', 'F4', 'G#4',
+            'C#5', 'F5', 'G#5',
         ];
 
         // Easter egg: type "ring" to reveal music player and play
@@ -398,12 +390,14 @@
                 document.getElementById('musicPlayer').classList.add('visible');
                 typedKeys = '';
                 await Tone.start();
-                playBridalMarch();
+                playArpeggio();
             }
         });
 
-        async function playBridalMarch() {
+        async function playArpeggio() {
             if (!synth) {
+                Tone.Transport.bpm.value = 120;
+
                 delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
                 delay.wet.value = 0.25;
 
@@ -415,36 +409,16 @@
             }
 
             const now = Tone.now();
-            let time = now;
+            const sixtyfourth = Tone.Time('64n').toSeconds();
 
-            bridalMarch.forEach(([note, dur]) => {
-                const seconds = Tone.Time(dur).toSeconds();
-                if (note) {
-                    synth.triggerAttackRelease(note, dur, time);
-                }
-                time += seconds;
+            arpeggio.forEach((note, i) => {
+                synth.triggerAttackRelease(note, '64n', now + (i * sixtyfourth));
             });
-        }
-
-        function stopMusic() {
-            if (synth) {
-                synth.triggerRelease();
-            }
         }
 
         document.getElementById('playBtn').addEventListener('click', async () => {
             await Tone.start();
-            const btn = document.getElementById('playBtn');
-
-            if (isPlaying) {
-                stopMusic();
-                btn.textContent = 'Play Music';
-                isPlaying = false;
-            } else {
-                playBridalMarch();
-                btn.textContent = 'Stop Music';
-                isPlaying = true;
-            }
+            playArpeggio();
         });
     </script>
 </body>
