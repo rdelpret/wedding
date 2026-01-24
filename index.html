@@ -1198,19 +1198,18 @@
 
                 // Second arp - sawtooth with filter sweep
                 const arp2Filter = new Tone.AutoFilter({
-                    frequency: '2n',
-                    baseFrequency: 200,
-                    octaves: 4
+                    frequency: '4n',
+                    baseFrequency: 80,
+                    octaves: 6,
+                    depth: 1
                 }).toDestination();
                 arp2Filter.start();
-                const arp2Delay = new Tone.PingPongDelay('8n', 0.4).connect(arp2Filter);
-                arp2Delay.wet.value = 0.3;
 
                 swirlArp2 = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
-                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.15 }
-                }).connect(arp2Delay);
-                swirlArp2.volume.value = -14;
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.2 }
+                }).connect(arp2Filter);
+                swirlArp2.volume.value = -10;
 
                 // Kick drum
                 swirlKick = new Tone.MembraneSynth({
