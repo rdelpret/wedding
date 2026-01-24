@@ -43,7 +43,7 @@
         .venue-illustration {
             width: 280px;
             max-width: 100%;
-            margin-bottom: 55px;
+            margin-bottom: 35px;
             touch-action: manipulation;
             -webkit-user-select: none;
             user-select: none;
@@ -67,7 +67,7 @@
             text-transform: uppercase;
             color: #6a6a6a;
             margin-bottom: 20px;
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .name {
@@ -289,17 +289,15 @@
             pointer-events: auto;
             position: fixed;
             left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 70px;
             background-color: rgba(245, 240, 230, 0.95);
             border: 1px solid #c4b59d;
             padding: 15px 20px;
             max-width: 220px;
-            max-height: 70vh;
+            max-height: 50vh;
             overflow-y: auto;
             text-align: left;
             font-size: 0.85rem;
-            position: relative;
         }
 
         .modal-title {
@@ -346,8 +344,7 @@
         .hunt-tab {
             position: fixed;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 70px;
             background: linear-gradient(135deg, #f5f0e6 0%, #e8e0d0 100%);
             border: 1px solid #c4b59d;
             border-left: none;
@@ -364,6 +361,14 @@
             padding-left: 10px;
             box-shadow: 3px 3px 12px rgba(0,0,0,0.15);
             background: linear-gradient(135deg, #c4b59d 0%, #b5a68e 100%);
+        }
+
+        .hunt-desktop {
+            display: block;
+        }
+
+        .hunt-mobile {
+            display: none;
         }
 
         .falling-ring {
@@ -430,9 +435,17 @@
                 letter-spacing: 2px;
             }
 
+            .hunt-desktop {
+                display: none;
+            }
+
+            .hunt-mobile {
+                display: block;
+            }
+
             .venue-illustration {
                 width: 220px;
-                margin-bottom: 45px;
+                margin-bottom: 25px;
             }
 
             .save-the-date {
@@ -445,7 +458,7 @@
                 font-size: 0.6rem;
                 letter-spacing: 3px;
                 margin-bottom: 15px;
-                margin-top: 10px;
+                margin-top: 30px;
             }
 
             .name {
@@ -499,7 +512,7 @@
 
             .venue-illustration {
                 width: 340px;
-                margin-bottom: 65px;
+                margin-bottom: 45px;
             }
 
             .save-the-date {
@@ -579,7 +592,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.31</span>
+        <span class="version">v.0.1.32</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -664,27 +677,42 @@
     <div class="modal-overlay" id="huntModal">
         <div class="modal-content">
             <span class="modal-close" id="huntClose">&times;</span>
-            <h2 class="modal-title">Easter Egg Hunt</h2>
-            <p style="margin-bottom: 15px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #5a5a5a;">Type the answer to reveal each one!</p>
-            <ul class="modal-list">
-                <li>💍 Put a ___ on it</li>
-                <li>❤️ All you need is ___</li>
-                <li>💋 Read my ___</li>
-                <li>🌸 A spring ___</li>
-                <li>🎂 Let them eat ___</li>
-                <li>🌀 Watch me ___</li>
-                <li>🐕 One of the pups' names</li>
-                <li>🎵 ___ makes the people come together</li>
-                <li>🪩 ___ ball</li>
-                <li>🥂 A ___ to the happy couple</li>
-                <li>🎷 Kenny G's instrument</li>
-                <li>👰 Here comes the ___</li>
-                <li>🤵 The ___</li>
-                <li>💒 A wedding ___</li>
-                <li>🎄 Merry ___mas</li>
-                <li>👻 Who ya gonna call?</li>
-            </ul>
-            <p style="margin-top: 20px; font-style: italic; font-size: 0.9rem;">Mobile: Tap the photo 7 times!</p>
+            <!-- Desktop content -->
+            <div class="hunt-desktop">
+                <h2 class="modal-title">Easter Egg Hunt</h2>
+                <p style="margin-bottom: 15px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #5a5a5a;">Type the answer to reveal each one!</p>
+                <ul class="modal-list">
+                    <li>💍 Put a ___ on it</li>
+                    <li>❤️ All you need is ___</li>
+                    <li>💋 Read my ___</li>
+                    <li>🌸 A spring ___</li>
+                    <li>🎂 Let them eat ___</li>
+                    <li>🌀 Watch me ___</li>
+                    <li>🐕 One of the pups' names</li>
+                    <li>🎵 ___ makes the people come together</li>
+                    <li>🪩 ___ ball</li>
+                    <li>🥂 A ___ to the happy couple</li>
+                    <li>🎷 Kenny G's instrument</li>
+                    <li>👰 Here comes the ___</li>
+                    <li>🤵 The ___</li>
+                    <li>💒 A wedding ___</li>
+                    <li>🎄 Merry ___mas</li>
+                    <li>👻 Who ya gonna call?</li>
+                </ul>
+            </div>
+            <!-- Mobile content -->
+            <div class="hunt-mobile">
+                <h2 class="modal-title">Secret Surprise</h2>
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.8; color: #4a4a4a;">
+                    We've hidden a fun digital scavenger hunt on this site! For the full experience, visit us on a desktop or laptop computer.
+                </p>
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.8; color: #4a4a4a; margin-top: 15px;">
+                    Can't wait? Tap our photo <strong>7 times</strong> to skip straight to the surprise.
+                </p>
+                <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #6a6a6a; margin-top: 20px;">
+                    🔊 Turn your sound on for the full experience!
+                </p>
+            </div>
         </div>
     </div>
 
