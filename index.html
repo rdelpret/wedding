@@ -369,14 +369,17 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
-        // Easter egg: type "ring" to reveal music player
+        // Easter egg: type "ring" to reveal music player and play opening phrase
         let typedKeys = '';
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', async (e) => {
             typedKeys += e.key.toLowerCase();
             if (typedKeys.length > 4) typedKeys = typedKeys.slice(-4);
             if (typedKeys === 'ring') {
                 document.getElementById('musicPlayer').classList.add('visible');
                 typedKeys = '';
+                // Play opening phrase once
+                await Tone.start();
+                playMelody();
             }
         });
 
