@@ -177,6 +177,22 @@
             color: #fff;
         }
 
+        .falling-ring {
+            position: fixed;
+            top: -50px;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                top: 110vh;
+                transform: rotate(360deg);
+            }
+        }
+
         .nav {
             position: fixed;
             top: 0;
@@ -394,6 +410,20 @@
             }
         });
 
+        function spawnRings() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const ring = document.createElement('div');
+                    ring.className = 'falling-ring';
+                    ring.textContent = '💍';
+                    ring.style.left = Math.random() * 100 + 'vw';
+                    ring.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(ring);
+                    setTimeout(() => ring.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
         async function playArpeggio() {
             if (!synth) {
                 Tone.Transport.bpm.value = 120;
@@ -408,12 +438,19 @@
                 synth.volume.value = -8;
             }
 
-            const now = Tone.now();
             const sixtyfourth = Tone.Time('64n').toSeconds();
+            const arpeggioLength = arpeggio.length * sixtyfourth;
 
-            arpeggio.forEach((note, i) => {
-                synth.triggerAttackRelease(note, '64n', now + (i * sixtyfourth));
-            });
+            // Play 4 times
+            for (let repeat = 0; repeat < 4; repeat++) {
+                const now = Tone.now() + (repeat * arpeggioLength);
+                arpeggio.forEach((note, i) => {
+                    synth.triggerAttackRelease(note, '64n', now + (i * sixtyfourth));
+                });
+            }
+
+            // Spawn falling rings
+            spawnRings();
         }
 
         document.getElementById('playBtn').addEventListener('click', async () => {
