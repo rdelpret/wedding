@@ -579,7 +579,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.30</span>
+        <span class="version">v.0.1.31</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -892,15 +892,18 @@
         });
         document.getElementById('huntClose').addEventListener('click', () => {
             document.getElementById('huntModal').classList.remove('active');
+            document.getElementById('huntTab').style.display = 'block';
         });
         document.getElementById('huntTab').addEventListener('click', () => {
-            document.getElementById('huntModal').classList.toggle('active');
+            document.getElementById('huntModal').classList.add('active');
+            document.getElementById('huntTab').style.display = 'none';
         });
         // Close modals with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.getElementById('adminModal').classList.remove('active');
                 document.getElementById('huntModal').classList.remove('active');
+                document.getElementById('huntTab').style.display = 'block';
             }
         });
 
