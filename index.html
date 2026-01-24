@@ -478,7 +478,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.19</span>
+        <span class="version">v.0.1.20</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1293,13 +1293,10 @@
         const dogMelody = [
             'E5', 'G5', 'E5', 'C5',
             'D5', 'F5', 'D5', 'B4',
-            'C5', 'E5', 'G5', 'C6',
-            'B5', 'G5', 'E5', 'C5',
-            'A4', 'C5', 'E5', 'A5',
-            'G5', 'E5', 'D5', 'C5',
+            'C5', 'E5', 'G5', 'C5',
         ];
 
-        const dogBassLine = ['C3', 'E3', 'G3', 'C3', 'A2', 'E3', 'G3', 'C3'];
+        const dogBassLine = ['C3', 'E3', 'G3', 'C3'];
 
         function spawnDogs() {
             const emojis = ['🐕', '🦮', '🐶', '🐾'];
@@ -1338,23 +1335,17 @@
             }
 
             const eighth = Tone.Time('8n').toSeconds();
-            const quarter = Tone.Time('4n').toSeconds();
+            const startTime = Tone.now();
 
-            // Play melody twice
-            for (let repeat = 0; repeat < 2; repeat++) {
-                const startTime = Tone.now() + (repeat * dogMelody.length * eighth);
-                dogMelody.forEach((note, i) => {
-                    dogSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
-                });
+            // Play melody once
+            dogMelody.forEach((note, i) => {
+                dogSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+            });
 
-                // Bass line loops under melody
-                for (let bar = 0; bar < 3; bar++) {
-                    const barStart = startTime + (bar * dogBassLine.length * quarter);
-                    dogBassLine.forEach((note, i) => {
-                        dogBass.triggerAttackRelease(note, '8n', barStart + (i * quarter));
-                    });
-                }
-            }
+            // Bass line once
+            dogBassLine.forEach((note, i) => {
+                dogBass.triggerAttackRelease(note, '4n', startTime + (i * eighth * 3));
+            });
 
             spawnDogs();
         }
