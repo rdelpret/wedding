@@ -348,22 +348,22 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(245, 240, 230, 0.95);
+            background: linear-gradient(135deg, #f5f0e6 0%, #e8e0d0 100%);
             border: 1px solid #c4b59d;
             border-left: none;
-            padding: 8px 2px;
+            border-radius: 0 8px 8px 0;
+            padding: 12px 6px;
             cursor: pointer;
             z-index: 499;
-            font-size: 0.6rem;
-            writing-mode: vertical-rl;
-            font-family: 'Josefin Sans', sans-serif;
-            letter-spacing: 1px;
-            color: #5a5a5a;
+            font-size: 1.2rem;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
         }
 
         .hunt-tab:hover {
-            background-color: #c4b59d;
-            color: #fff;
+            padding-left: 10px;
+            box-shadow: 3px 3px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #c4b59d 0%, #b5a68e 100%);
         }
 
         .falling-ring {
@@ -579,7 +579,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.28</span>
+        <span class="version">v.0.1.29</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -632,7 +632,7 @@
     </div>
 
     <!-- Hunt Tab -->
-    <div class="hunt-tab" id="huntTab">?</div>
+    <div class="hunt-tab" id="huntTab">🔍</div>
 
     <!-- Admin Modal -->
     <div class="modal-overlay" id="adminModal">
