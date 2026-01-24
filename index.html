@@ -453,7 +453,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.8</span>
+        <span class="version">v.0.1.9</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1156,33 +1156,42 @@
             playGroomJingle();
         });
 
-        // Mobile easter eggs - simple tap patterns on photo
-        document.addEventListener('DOMContentLoaded', () => {
+        // Mobile easter eggs - tap pattern on photo
+        (function() {
             const photo = document.querySelector('.venue-illustration');
-            if (photo) {
-                let tapCount = 0;
-                let lastTap = 0;
-                const TAP_TIMEOUT = 400;
+            if (!photo) return;
 
-                photo.addEventListener('click', async () => {
-                    const now = Date.now();
-                    if (now - lastTap < TAP_TIMEOUT) {
-                        tapCount++;
-                    } else {
-                        tapCount = 1;
-                    }
-                    lastTap = now;
+            let tapCount = 0;
+            let lastTap = 0;
+            const TAP_TIMEOUT = 600; // ms between taps
 
-                    // 7 taps reveals all easter eggs
-                    if (tapCount === 7) {
-                        tapCount = 0;
-                        await Tone.start();
-                        document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
-                        playSwirlbridge();
-                    }
-                });
+            async function handleTap() {
+                const now = Date.now();
+                if (now - lastTap < TAP_TIMEOUT) {
+                    tapCount++;
+                } else {
+                    tapCount = 1;
+                }
+                lastTap = now;
+
+                // 7 taps reveals all easter eggs
+                if (tapCount >= 7) {
+                    tapCount = 0;
+                    await Tone.start();
+                    document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
+                    playSwirlbridge();
+                }
             }
-        });
+
+            // Use touchend for mobile
+            photo.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                handleTap();
+            });
+
+            // Use click for desktop
+            photo.addEventListener('click', handleTap);
+        })();
 
         // Swirlbridge - the ultimate chiptune dub experience
         let swirlBass = null;
