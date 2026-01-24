@@ -747,6 +747,7 @@
         // Disco - full techno track with bass and arp
         let discoBasssynth = null;
         let discoArpSynth = null;
+        let discoClap = null;
         let discoPlaying = false;
 
         function spawnDiscoBalls() {
@@ -792,6 +793,14 @@
                     envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.2 }
                 }).connect(arpDelay);
                 discoArpSynth.volume.value = -12;
+
+                // Clap - filtered noise
+                const clapFilter = new Tone.Filter(1500, 'bandpass').toDestination();
+                discoClap = new Tone.NoiseSynth({
+                    noise: { type: 'white' },
+                    envelope: { attack: 0.001, decay: 0.15, sustain: 0, release: 0.05 }
+                }).connect(clapFilter);
+                discoClap.volume.value = -8;
             }
 
             Tone.Transport.bpm.value = 128;
@@ -811,6 +820,10 @@
                 discoArp.forEach((note, i) => {
                     discoArpSynth.triggerAttackRelease(note, '16n', barStart + (i * sixteenth));
                 });
+
+                // Clap on beats 2 and 4
+                discoClap.triggerAttackRelease('16n', barStart + (2 * eighth));
+                discoClap.triggerAttackRelease('16n', barStart + (6 * eighth));
             }
 
             spawnDiscoBalls();
