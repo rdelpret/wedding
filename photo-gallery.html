@@ -260,27 +260,27 @@
         <div class="divider"></div>
 
         <div class="photo-grid">
-            <img src="photogallery/IMG_9209.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_9337.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_9551.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_9632.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_9651.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_9973.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_7112.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_7129.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_7041.jpg" alt="Diana and Robert">
-            <img src="photogallery/IMG_6909.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_6837.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_6819.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_6532.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_5974.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_5512.jpg" alt="Diana and Robert">
-            <img src="photogallery/IMG_5490.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_3302.jpeg" alt="Diana and Robert">
-            <img src="photogallery/IMG_2615.jpeg" alt="Diana and Robert">
-            <img src="photogallery/Facetune_29-11-2025-10-20-27.jpeg" alt="Diana and Robert">
-            <img src="photogallery/FA3279E3-C164-40C8-BC45-317BB3D32ED6.jpeg" alt="Diana and Robert">
-            <img src="photogallery/EA0EC96D-7BB8-40BC-8013-C8189770F0E9.jpeg" alt="Diana and Robert">
+            <img src="photogallery/thumbs/IMG_9209.jpeg" data-full="photogallery/IMG_9209.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_9337.jpeg" data-full="photogallery/IMG_9337.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_9551.jpeg" data-full="photogallery/IMG_9551.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_9632.jpeg" data-full="photogallery/IMG_9632.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_9651.jpeg" data-full="photogallery/IMG_9651.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_9973.jpeg" data-full="photogallery/IMG_9973.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_7112.jpeg" data-full="photogallery/IMG_7112.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_7129.jpeg" data-full="photogallery/IMG_7129.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_7041.jpg" data-full="photogallery/IMG_7041.jpg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_6909.jpeg" data-full="photogallery/IMG_6909.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_6837.jpeg" data-full="photogallery/IMG_6837.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_6819.jpeg" data-full="photogallery/IMG_6819.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_6532.jpeg" data-full="photogallery/IMG_6532.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_5974.jpeg" data-full="photogallery/IMG_5974.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_5512.jpg" data-full="photogallery/IMG_5512.jpg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_5490.jpeg" data-full="photogallery/IMG_5490.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_3302.jpeg" data-full="photogallery/IMG_3302.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/IMG_2615.jpeg" data-full="photogallery/IMG_2615.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/Facetune_29-11-2025-10-20-27.jpeg" data-full="photogallery/Facetune_29-11-2025-10-20-27.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/FA3279E3-C164-40C8-BC45-317BB3D32ED6.jpeg" data-full="photogallery/FA3279E3-C164-40C8-BC45-317BB3D32ED6.jpeg" alt="Diana and Robert" loading="lazy">
+            <img src="photogallery/thumbs/EA0EC96D-7BB8-40BC-8013-C8189770F0E9.jpeg" data-full="photogallery/EA0EC96D-7BB8-40BC-8013-C8189770F0E9.jpeg" alt="Diana and Robert" loading="lazy">
         </div>
 
         <div class="divider"></div>
@@ -306,7 +306,7 @@
 
         function openLightbox(index) {
             currentIndex = index;
-            lightboxImg.src = images[index].src;
+            lightboxImg.src = images[index].dataset.full || images[index].src;
             lightboxCounter.textContent = `${index + 1} / ${images.length}`;
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -321,7 +321,7 @@
             currentIndex += direction;
             if (currentIndex >= images.length) currentIndex = 0;
             if (currentIndex < 0) currentIndex = images.length - 1;
-            lightboxImg.src = images[currentIndex].src;
+            lightboxImg.src = images[currentIndex].dataset.full || images[currentIndex].src;
             lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
         }
 
