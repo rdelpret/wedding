@@ -277,7 +277,7 @@
             width: auto;
             height: 100%;
             background-color: transparent;
-            z-index: 2000;
+            z-index: 500;
             pointer-events: none;
         }
 
@@ -288,50 +288,50 @@
         .modal-content {
             pointer-events: auto;
             position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #f5f0e6;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            padding: 30px 40px;
-            max-width: 400px;
-            max-height: 80vh;
+            left: 10px;
+            bottom: 10px;
+            background-color: rgba(245, 240, 230, 0.95);
+            border: 1px solid #c4b59d;
+            padding: 15px 20px;
+            max-width: 220px;
+            max-height: 60vh;
             overflow-y: auto;
-            text-align: center;
+            text-align: left;
+            font-size: 0.85rem;
             position: relative;
         }
 
         .modal-title {
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 300;
-            font-size: 1rem;
-            letter-spacing: 4px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: #3d3d3d;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .modal-list {
             list-style: none;
             text-align: left;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            line-height: 2;
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: #4a4a4a;
         }
 
         .modal-list code {
             background-color: rgba(196, 181, 157, 0.3);
-            padding: 2px 8px;
+            padding: 1px 4px;
             font-family: monospace;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
         }
 
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
+            top: 5px;
+            right: 10px;
+            font-size: 1rem;
             color: #5a5a5a;
             cursor: pointer;
             font-family: 'Josefin Sans', sans-serif;
@@ -556,7 +556,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.25</span>
+        <span class="version">v.0.1.26</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
