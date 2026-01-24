@@ -43,7 +43,7 @@
         .venue-illustration {
             width: 280px;
             max-width: 100%;
-            margin-bottom: 35px;
+            margin-bottom: 15px;
             touch-action: manipulation;
             -webkit-user-select: none;
             user-select: none;
@@ -292,12 +292,28 @@
             top: 70px;
             background-color: rgba(245, 240, 230, 0.95);
             border: 1px solid #c4b59d;
-            padding: 15px 20px;
-            max-width: 220px;
+            padding: 15px 20px 15px 20px;
+            max-width: 240px;
             max-height: 50vh;
             overflow-y: auto;
             text-align: left;
             font-size: 0.85rem;
+        }
+
+        .modal-close {
+            position: sticky;
+            top: -15px;
+            float: right;
+            margin-right: -10px;
+            margin-top: -10px;
+            font-size: 1.2rem;
+            color: #5a5a5a;
+            cursor: pointer;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            background-color: rgba(245, 240, 230, 0.95);
+            padding: 5px 8px;
+            z-index: 10;
         }
 
         .modal-title {
@@ -324,17 +340,6 @@
             padding: 1px 4px;
             font-family: monospace;
             font-size: 0.75rem;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 1rem;
-            color: #5a5a5a;
-            cursor: pointer;
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 300;
         }
 
         .modal-close:hover {
@@ -445,7 +450,7 @@
 
             .venue-illustration {
                 width: 220px;
-                margin-bottom: 25px;
+                margin-bottom: 10px;
             }
 
             .save-the-date {
@@ -512,7 +517,7 @@
 
             .venue-illustration {
                 width: 340px;
-                margin-bottom: 45px;
+                margin-bottom: 20px;
             }
 
             .save-the-date {
@@ -592,7 +597,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.32</span>
+        <span class="version">v.0.1.33</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -683,7 +688,6 @@
                 <p style="margin-bottom: 15px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #5a5a5a;">Type the answer to reveal each one!</p>
                 <ul class="modal-list">
                     <li>💍 Put a ___ on it</li>
-                    <li>❤️ All you need is ___</li>
                     <li>💋 Read my ___</li>
                     <li>🌸 A spring ___</li>
                     <li>🎂 Let them eat ___</li>
@@ -698,6 +702,7 @@
                     <li>💒 A wedding ___</li>
                     <li>🎄 Merry ___mas</li>
                     <li>👻 Who ya gonna call?</li>
+                    <li>❤️ All you need is ___</li>
                 </ul>
             </div>
             <!-- Mobile content -->
