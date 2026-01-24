@@ -395,6 +395,10 @@
             }
         });
 
+        // Create delay effect
+        const delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
+        delay.wet.value = 0.25;
+
         function playMidi(loop = false) {
             if (!midiData) return;
 
@@ -406,10 +410,10 @@
 
             midiData.tracks.forEach(track => {
                 const synth = new Tone.PolySynth(Tone.Synth, {
-                    oscillator: { type: 'triangle' },
-                    envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.4 }
-                }).toDestination();
-                synth.volume.value = -10;
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.005, decay: 0.2, sustain: 0.1, release: 0.3 }
+                }).connect(delay);
+                synth.volume.value = -12;
                 synths.push(synth);
 
                 track.notes.forEach(note => {
