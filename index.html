@@ -186,6 +186,14 @@
             left: 330px;
         }
 
+        #bridePlayer {
+            left: 375px;
+        }
+
+        #groomPlayer {
+            left: 420px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -431,6 +439,12 @@
     <div class="music-player" id="saxPlayer">
         <button class="play-btn" id="saxBtn">🎷</button>
     </div>
+    <div class="music-player" id="bridePlayer">
+        <button class="play-btn" id="brideBtn">👰</button>
+    </div>
+    <div class="music-player" id="groomPlayer">
+        <button class="play-btn" id="groomBtn">🤵</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
@@ -500,6 +514,22 @@
             'F4', 'D4', 'C4', 'Bb3', 'G3',
         ];
 
+        // Bride - elegant waltz melody
+        const brideMelody = [
+            'E5', 'G5', 'B5',
+            'A5', 'G5', 'E5',
+            'F5', 'A5', 'C6',
+            'B5', 'A5', 'G5', 'E5',
+        ];
+
+        // Groom - stately march
+        const groomMelody = [
+            'C4', 'G4', 'C4', 'E4',
+            'G4', 'C5', 'G4',
+            'F4', 'A4', 'F4',
+            'G4', 'E4', 'C4',
+        ];
+
         // Easter eggs: type "ring", "love", "lips", "flower", "cake"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
@@ -554,6 +584,18 @@
                 typedKeys = '';
                 await Tone.start();
                 playSaxJingle();
+            }
+            if (typedKeys.includes('bride')) {
+                document.getElementById('bridePlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playBrideJingle();
+            }
+            if (typedKeys.includes('groom')) {
+                document.getElementById('groomPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playGroomJingle();
             }
         });
 
@@ -973,6 +1015,97 @@
         document.getElementById('saxBtn').addEventListener('click', async () => {
             await Tone.start();
             playSaxJingle();
+        });
+
+        // Bride - elegant harp-like waltz
+        let brideSynth = null;
+
+        function spawnBrides() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const bride = document.createElement('div');
+                    bride.className = 'falling-ring';
+                    bride.textContent = '👰';
+                    bride.style.left = Math.random() * 100 + 'vw';
+                    bride.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(bride);
+                    setTimeout(() => bride.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playBrideJingle() {
+            if (!brideSynth) {
+                const brideReverb = new Tone.Reverb({ decay: 3, wet: 0.5 }).toDestination();
+                await brideReverb.generate();
+                const brideChorus = new Tone.Chorus(2, 3.5, 0.4).connect(brideReverb);
+                brideChorus.start();
+
+                brideSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.02, decay: 0.4, sustain: 0.3, release: 1.2 }
+                }).connect(brideChorus);
+                brideSynth.volume.value = -8;
+            }
+
+            // Waltz timing (3/4)
+            const quarter = Tone.Time('4n').toSeconds();
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * brideMelody.length * quarter * 0.5);
+                brideMelody.forEach((note, i) => {
+                    brideSynth.triggerAttackRelease(note, '4n', startTime + (i * quarter * 0.5));
+                });
+            }
+            spawnBrides();
+        }
+
+        document.getElementById('brideBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playBrideJingle();
+        });
+
+        // Groom - bold brass-like march
+        let groomSynth = null;
+
+        function spawnGrooms() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const groom = document.createElement('div');
+                    groom.className = 'falling-ring';
+                    groom.textContent = '🤵';
+                    groom.style.left = Math.random() * 100 + 'vw';
+                    groom.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(groom);
+                    setTimeout(() => groom.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playGroomJingle() {
+            if (!groomSynth) {
+                const groomDelay = new Tone.FeedbackDelay('8n', 0.15).toDestination();
+                groomDelay.wet.value = 0.2;
+
+                groomSynth = new Tone.Synth({
+                    oscillator: { type: 'fatsquare', spread: 15, count: 3 },
+                    envelope: { attack: 0.02, decay: 0.2, sustain: 0.5, release: 0.3 }
+                }).connect(groomDelay);
+                groomSynth.volume.value = -10;
+            }
+
+            const quarter = Tone.Time('4n').toSeconds();
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * groomMelody.length * quarter * 0.6);
+                groomMelody.forEach((note, i) => {
+                    groomSynth.triggerAttackRelease(note, '8n', startTime + (i * quarter * 0.6));
+                });
+            }
+            spawnGrooms();
+        }
+
+        document.getElementById('groomBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playGroomJingle();
         });
     </script>
 </body>
