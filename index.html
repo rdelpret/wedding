@@ -463,7 +463,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.11</span>
+        <span class="version">v.0.1.12</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -592,7 +592,7 @@
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 11) typedKeys = typedKeys.slice(-11);
+            if (typedKeys.length > 13) typedKeys = typedKeys.slice(-13);
 
             if (typedKeys.includes('ring')) {
                 document.getElementById('musicPlayer').classList.add('visible');
@@ -654,24 +654,18 @@
                 await Tone.start();
                 playGroomJingle();
             }
-            if (typedKeys.includes('swirl')) {
-                document.getElementById('swirlPlayer').classList.add('visible');
-                typedKeys = '';
-                await Tone.start();
-                playSwirlbridge();
-            }
             if (typedKeys.includes('chapel')) {
                 document.getElementById('chapelPlayer').classList.add('visible');
                 typedKeys = '';
                 await Tone.start();
                 playChapelJingle();
             }
-            if (typedKeys.includes('swirlbridge')) {
-                // Reveal all buttons
+            if (typedKeys.includes('ringoandmango')) {
+                // Reveal all buttons and play dog song
                 document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
                 typedKeys = '';
                 await Tone.start();
-                playSwirlbridge();
+                playDogSong();
             }
         });
 
@@ -1244,6 +1238,77 @@
             playChapelJingle();
         });
 
+        // Dog song for Ringo and Mango - playful bouncy melody
+        let dogSynth = null;
+        let dogBass = null;
+
+        const dogMelody = [
+            'G4', 'G4', 'A4', 'G4', 'C5', 'B4',
+            'G4', 'G4', 'A4', 'G4', 'D5', 'C5',
+            'G4', 'G4', 'G5', 'E5', 'C5', 'B4', 'A4',
+            'F5', 'F5', 'E5', 'C5', 'D5', 'C5',
+        ];
+
+        const dogBassLine = ['C3', 'G3', 'C3', 'G3', 'F3', 'G3', 'C3', 'G3'];
+
+        function spawnDogs() {
+            const emojis = ['🐕', '🦮', '🐶', '🐾'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const dog = document.createElement('div');
+                    dog.className = 'falling-ring';
+                    dog.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    dog.style.left = Math.random() * 100 + 'vw';
+                    dog.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(dog);
+                    setTimeout(() => dog.remove(), 5000);
+                }, i * 120);
+            }
+        }
+
+        async function playDogSong() {
+            if (!dogSynth) {
+                // Bouncy plucky lead
+                const dogDelay = new Tone.PingPongDelay('8n', 0.2).toDestination();
+                dogDelay.wet.value = 0.2;
+
+                dogSynth = new Tone.Synth({
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.01, decay: 0.15, sustain: 0.2, release: 0.3 }
+                }).connect(dogDelay);
+                dogSynth.volume.value = -6;
+
+                // Bouncy bass
+                const bassFilter = new Tone.Filter(300, 'lowpass').toDestination();
+                dogBass = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.4, release: 0.2 }
+                }).connect(bassFilter);
+                dogBass.volume.value = -8;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+            const quarter = Tone.Time('4n').toSeconds();
+
+            // Play melody twice
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * dogMelody.length * eighth);
+                dogMelody.forEach((note, i) => {
+                    dogSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+                });
+
+                // Bass line loops under melody
+                for (let bar = 0; bar < 3; bar++) {
+                    const barStart = startTime + (bar * dogBassLine.length * quarter);
+                    dogBassLine.forEach((note, i) => {
+                        dogBass.triggerAttackRelease(note, '8n', barStart + (i * quarter));
+                    });
+                }
+            }
+
+            spawnDogs();
+        }
+
         // Mobile easter eggs - tap pattern on photo
         (function() {
             const photo = document.querySelector('.venue-illustration');
@@ -1262,12 +1327,12 @@
                 }
                 lastTap = now;
 
-                // 7 taps triggers heart/love
+                // 7 taps reveals all emojis and plays dog song
                 if (tapCount >= 7) {
                     tapCount = 0;
                     await Tone.start();
-                    document.getElementById('heartPlayer').classList.add('visible');
-                    playLoveCharmer();
+                    document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
+                    playDogSong();
                 }
             }
 
