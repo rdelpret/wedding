@@ -158,7 +158,7 @@
             opacity: 1;
         }
 
-        #snakePlayer {
+        #heartPlayer {
             left: 60px;
         }
 
@@ -386,8 +386,8 @@
     <div class="music-player" id="musicPlayer">
         <button class="play-btn" id="playBtn">💍</button>
     </div>
-    <div class="music-player" id="snakePlayer">
-        <button class="play-btn" id="snakeBtn">🐍</button>
+    <div class="music-player" id="heartPlayer">
+        <button class="play-btn" id="loveBtn">❤️</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -403,13 +403,15 @@
             'C#5', 'G#5', 'C6',
         ];
 
-        // Snake charmer melody - E phrygian dominant / Arabic scale
-        const snakeMelody = [
-            'E4', 'F4', 'G#4', 'A4', 'B4', 'C5', 'D5', 'E5',
-            'D5', 'C5', 'B4', 'A4', 'G#4', 'F4', 'E4',
+        // Love melody - sweet romantic arpeggio in F major
+        const loveMelody = [
+            'F4', 'A4', 'C5', 'F5',
+            'E5', 'C5', 'A4',
+            'G4', 'B4', 'D5', 'G5',
+            'F5', 'D5', 'B4', 'G4', 'F4',
         ];
 
-        // Easter eggs: type "ring" or "snake"
+        // Easter eggs: type "ring" or "love"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
@@ -422,11 +424,11 @@
                 await Tone.start();
                 playArpeggio();
             }
-            if (typedKeys.includes('snake')) {
-                document.getElementById('snakePlayer').classList.add('visible');
+            if (typedKeys.includes('love')) {
+                document.getElementById('heartPlayer').classList.add('visible');
                 typedKeys = '';
                 await Tone.start();
-                playSnakeCharmer();
+                playLoveCharmer();
             }
         });
 
@@ -478,21 +480,21 @@
             playArpeggio();
         });
 
-        function spawnSnakes() {
+        function spawnHearts() {
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
-                    const snake = document.createElement('div');
-                    snake.className = 'falling-ring';
-                    snake.textContent = '🐍';
-                    snake.style.left = Math.random() * 100 + 'vw';
-                    snake.style.animationDuration = (2 + Math.random() * 3) + 's';
-                    document.body.appendChild(snake);
-                    setTimeout(() => snake.remove(), 5000);
+                    const love = document.createElement('div');
+                    love.className = 'falling-ring';
+                    love.textContent = '❤️';
+                    love.style.left = Math.random() * 100 + 'vw';
+                    love.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(love);
+                    setTimeout(() => love.remove(), 5000);
                 }, i * 100);
             }
         }
 
-        async function playSnakeCharmer() {
+        async function playLoveCharmer() {
             if (!synth) {
                 Tone.Transport.bpm.value = 120;
 
@@ -510,18 +512,18 @@
 
             // Play 2 times
             for (let repeat = 0; repeat < 2; repeat++) {
-                const startTime = Tone.now() + (repeat * snakeMelody.length * sixteenth);
-                snakeMelody.forEach((note, i) => {
+                const startTime = Tone.now() + (repeat * loveMelody.length * sixteenth);
+                loveMelody.forEach((note, i) => {
                     synth.triggerAttackRelease(note, '16n', startTime + (i * sixteenth));
                 });
             }
 
-            spawnSnakes();
+            spawnHearts();
         }
 
-        document.getElementById('snakeBtn').addEventListener('click', async () => {
+        document.getElementById('loveBtn').addEventListener('click', async () => {
             await Tone.start();
-            playSnakeCharmer();
+            playLoveCharmer();
         });
     </script>
 </body>
