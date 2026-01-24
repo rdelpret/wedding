@@ -178,6 +178,14 @@
             left: 240px;
         }
 
+        #toastPlayer {
+            left: 285px;
+        }
+
+        #saxPlayer {
+            left: 330px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -417,6 +425,12 @@
     <div class="music-player" id="discoPlayer">
         <button class="play-btn" id="discoBtn">🪩</button>
     </div>
+    <div class="music-player" id="toastPlayer">
+        <button class="play-btn" id="toastBtn">🥂</button>
+    </div>
+    <div class="music-player" id="saxPlayer">
+        <button class="play-btn" id="saxBtn">🎷</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
@@ -470,6 +484,22 @@
             'G5', 'E5', 'C5', 'A4',
         ];
 
+        // Toast - bubbly celebratory sparkles
+        const toastMelody = [
+            'C6', 'E6', 'G6', 'C7',
+            'B6', 'G6', 'E6',
+            'D6', 'F6', 'A6', 'D7',
+            'C7', 'G6', 'E6', 'C6',
+        ];
+
+        // Sax - smooth jazz blues lick
+        const saxMelody = [
+            'G3', 'Bb3', 'C4', 'D4', 'F4',
+            'D4', 'C4', 'Bb3', 'G3',
+            'A3', 'C4', 'D4', 'F4', 'G4',
+            'F4', 'D4', 'C4', 'Bb3', 'G3',
+        ];
+
         // Easter eggs: type "ring", "love", "lips", "flower", "cake"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
@@ -512,6 +542,18 @@
                 typedKeys = '';
                 await Tone.start();
                 playDiscoTrack();
+            }
+            if (typedKeys.includes('toast')) {
+                document.getElementById('toastPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playToastJingle();
+            }
+            if (typedKeys.includes('sax')) {
+                document.getElementById('saxPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playSaxJingle();
             }
         });
 
@@ -837,6 +879,100 @@
         document.getElementById('discoBtn').addEventListener('click', async () => {
             await Tone.start();
             playDiscoTrack();
+        });
+
+        // Toast - sparkly champagne bubbles
+        let toastSynth = null;
+
+        function spawnChampagne() {
+            for (let i = 0; i < 35; i++) {
+                setTimeout(() => {
+                    const glass = document.createElement('div');
+                    glass.className = 'falling-ring';
+                    glass.textContent = '🥂';
+                    glass.style.left = Math.random() * 100 + 'vw';
+                    glass.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(glass);
+                    setTimeout(() => glass.remove(), 5000);
+                }, i * 120);
+            }
+        }
+
+        async function playToastJingle() {
+            if (!toastSynth) {
+                const shimmer = new Tone.Freeverb({ roomSize: 0.8, dampening: 3000 }).toDestination();
+                shimmer.wet.value = 0.4;
+                const sparkle = new Tone.Chorus(4, 2.5, 0.7).connect(shimmer);
+                sparkle.start();
+
+                toastSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.8 }
+                }).connect(sparkle);
+                toastSynth.volume.value = -10;
+            }
+
+            const thirtysecond = Tone.Time('32n').toSeconds();
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * toastMelody.length * thirtysecond);
+                toastMelody.forEach((note, i) => {
+                    toastSynth.triggerAttackRelease(note, '16n', startTime + (i * thirtysecond));
+                });
+            }
+            spawnChampagne();
+        }
+
+        document.getElementById('toastBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playToastJingle();
+        });
+
+        // Sax - smooth jazz with warm tone
+        let saxSynth = null;
+
+        function spawnSaxes() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const sax = document.createElement('div');
+                    sax.className = 'falling-ring';
+                    sax.textContent = '🎷';
+                    sax.style.left = Math.random() * 100 + 'vw';
+                    sax.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(sax);
+                    setTimeout(() => sax.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playSaxJingle() {
+            if (!saxSynth) {
+                const warmth = new Tone.Filter(1200, 'lowpass').toDestination();
+                const vibrato = new Tone.Vibrato(5, 0.15).connect(warmth);
+                const saxDelay = new Tone.FeedbackDelay('8n', 0.2).connect(vibrato);
+                saxDelay.wet.value = 0.15;
+
+                saxSynth = new Tone.Synth({
+                    oscillator: { type: 'fatsawtooth', spread: 20, count: 3 },
+                    envelope: { attack: 0.05, decay: 0.2, sustain: 0.6, release: 0.4 }
+                }).connect(saxDelay);
+                saxSynth.volume.value = -8;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+            const swingOffset = eighth * 0.1;
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * saxMelody.length * eighth);
+                saxMelody.forEach((note, i) => {
+                    const swing = i % 2 === 1 ? swingOffset : 0;
+                    saxSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth) + swing);
+                });
+            }
+            spawnSaxes();
+        }
+
+        document.getElementById('saxBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playSaxJingle();
         });
     </script>
 </body>
