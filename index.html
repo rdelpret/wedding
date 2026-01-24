@@ -1133,6 +1133,7 @@
         let swirlBass = null;
         let swirlLead = null;
         let swirlArp = null;
+        let swirlArp2 = null;
         let swirlKick = null;
         let swirlSnare = null;
         let swirlPlaying = false;
@@ -1143,6 +1144,7 @@
             'A4', 'C5', 'E5', 'A5', 'G5', 'E5', 'C5', 'A4',
         ];
         const swirlArpPat = ['E5', 'B5', 'G5', 'E6', 'B5', 'G5', 'E5', 'B4'];
+        const swirlArp2Pat = ['E3', 'G3', 'B3', 'E4', 'G4', 'B4', 'E5', 'B4', 'G4', 'E4', 'B3', 'G3'];
 
         function spawnSpirals() {
             for (let i = 0; i < 60; i++) {
@@ -1194,6 +1196,22 @@
                 }).connect(arpCrush);
                 swirlArp.volume.value = -16;
 
+                // Second arp - sawtooth with filter sweep
+                const arp2Filter = new Tone.AutoFilter({
+                    frequency: '2n',
+                    baseFrequency: 200,
+                    octaves: 4
+                }).toDestination();
+                arp2Filter.start();
+                const arp2Delay = new Tone.PingPongDelay('8n', 0.4).connect(arp2Filter);
+                arp2Delay.wet.value = 0.3;
+
+                swirlArp2 = new Tone.Synth({
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.15 }
+                }).connect(arp2Delay);
+                swirlArp2.volume.value = -14;
+
                 // Kick drum
                 swirlKick = new Tone.MembraneSynth({
                     pitchDecay: 0.05,
@@ -1238,6 +1256,11 @@
                         swirlArp.triggerAttackRelease(note, '32n', barStart + (rep * 8 * sixteenth) + (i * sixteenth));
                     });
                 }
+
+                // Second arp - slower, filtered sawtooth
+                swirlArp2Pat.forEach((note, i) => {
+                    swirlArp2.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
+                });
 
                 // Kick on 1 and 3
                 swirlKick.triggerAttackRelease('C1', '8n', barStart);
