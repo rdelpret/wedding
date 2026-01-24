@@ -246,6 +246,11 @@
             bottom: 290px;
         }
 
+        #ghostPlayer {
+            right: 15px;
+            bottom: 290px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -478,7 +483,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.20</span>
+        <span class="version">v.0.1.21</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -525,6 +530,9 @@
     </div>
     <div class="music-player" id="musicPlayer2">
         <button class="play-btn" id="musicBtn2">🎵</button>
+    </div>
+    <div class="music-player" id="ghostPlayer">
+        <button class="play-btn" id="ghostBtn">👻</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -708,6 +716,12 @@
                 typedKeys = '';
                 await Tone.start();
                 playMusicJingle();
+            }
+            if (typedKeys.includes('ghost')) {
+                document.getElementById('ghostPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playGhostJingle();
             }
         });
 
@@ -1484,6 +1498,61 @@
         document.getElementById('musicBtn2').addEventListener('click', async () => {
             await Tone.start();
             playMusicJingle();
+        });
+
+        // Ghost - creepy horror melody
+        let ghostSynth = null;
+
+        // Creepy melody with minor seconds and tritones [note, duration in 8ths]
+        const ghostMelody = [
+            ['E4', 3], ['F4', 1], ['E4', 2], ['Bb4', 2],
+            ['A4', 3], ['Ab4', 1], ['G4', 4],
+            ['E4', 2], ['Bb4', 2], ['A4', 2], ['F4', 2],
+            ['E4', 4], ['Eb4', 4],
+        ];
+
+        function spawnHorror() {
+            const emojis = ['👻', '🔪', '👽', '💀', '🦇', '🕷️', '☠️', '😱'];
+            for (let i = 0; i < 35; i++) {
+                setTimeout(() => {
+                    const spook = document.createElement('div');
+                    spook.className = 'falling-ring';
+                    spook.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    spook.style.left = Math.random() * 100 + 'vw';
+                    spook.style.animationDuration = (3 + Math.random() * 3) + 's';
+                    document.body.appendChild(spook);
+                    setTimeout(() => spook.remove(), 6000);
+                }, i * 120);
+            }
+        }
+
+        async function playGhostJingle() {
+            if (!ghostSynth) {
+                // Eerie pad with long reverb
+                const ghostReverb = new Tone.Reverb({ decay: 5, wet: 0.6 }).toDestination();
+                await ghostReverb.generate();
+                const ghostTremolo = new Tone.Tremolo(4, 0.5).connect(ghostReverb);
+                ghostTremolo.start();
+
+                ghostSynth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.3, decay: 0.5, sustain: 0.8, release: 1.5 }
+                }).connect(ghostTremolo);
+                ghostSynth.volume.value = -6;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds() * 1.5; // Slower tempo
+            let time = Tone.now();
+            ghostMelody.forEach(([note, dur]) => {
+                ghostSynth.triggerAttackRelease(note, eighth * dur, time);
+                time += eighth * dur;
+            });
+            spawnHorror();
+        }
+
+        document.getElementById('ghostBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playGhostJingle();
         });
 
         // Mobile easter eggs - tap pattern on photo
