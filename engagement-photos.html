@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Photos | Diana & Robert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            overscroll-behavior: none;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #f5f0e6;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4c4c4;
+            margin: 40px auto;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background-color: #e5e0d6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a8a8a;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .photo-placeholder.tall {
+            aspect-ratio: 3/4;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f0e6;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            z-index: 100;
+        }
+
+        .nav a {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .nav a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            body {
+                padding: 80px 15px 40px;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+                letter-spacing: 5px;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .nav a {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            .page-title {
+                font-size: 2rem;
+                letter-spacing: 10px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="our-story.html">Our Story</a>
+        <a href="engagement-photos.html">Engagement Photos</a>
+        <a href="https://www.pestana.com/en/hotel/freixo-palace" target="_blank" rel="noopener">The Venue</a>
+        <a href="https://www.tripadvisor.com/Tourism-g189180-Porto_Porto_District_Northern_Portugal-Vacations.html" target="_blank" rel="noopener">The City</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">Engagement Photos</h1>
+
+        <div class="divider"></div>
+
+        <div class="photo-grid">
+            <div class="photo-placeholder">Photo 1</div>
+            <div class="photo-placeholder">Photo 2</div>
+            <div class="photo-placeholder">Photo 3</div>
+            <div class="photo-placeholder">Photo 4</div>
+            <div class="photo-placeholder">Photo 5</div>
+            <div class="photo-placeholder">Photo 6</div>
+        </div>
+
+        <div class="divider"></div>
+    </div>
+</body>
+</html>
