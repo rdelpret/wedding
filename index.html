@@ -434,7 +434,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.9c70513</span>
+        <span class="version">v.454abaf</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1245,13 +1245,11 @@
                     swirlArp.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
                 });
 
-                // Reggae skank on upbeats (the "and" of each beat)
+                // Reggae skank on upbeats 2 and 4 (half time)
                 const chordIndex = bar % swirlSkankChords.length;
                 const chord = swirlSkankChords[chordIndex];
-                for (let beat = 0; beat < 4; beat++) {
-                    const upbeatTime = barStart + (beat * 2 * eighth) + eighth;
-                    swirlSkank.triggerAttackRelease(chord, '16n', upbeatTime);
-                }
+                swirlSkank.triggerAttackRelease(chord, '16n', barStart + (2 * eighth) + eighth);
+                swirlSkank.triggerAttackRelease(chord, '16n', barStart + (6 * eighth) + eighth);
 
                 // Kick on 1 and 3
                 swirlKick.triggerAttackRelease('C1', '8n', barStart);
