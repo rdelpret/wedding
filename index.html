@@ -468,7 +468,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.14</span>
+        <span class="version">v.0.1.15</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1261,14 +1261,17 @@
         let dogSynth = null;
         let dogBass = null;
 
+        // Playful bouncy dog melody - like a puppy running around
         const dogMelody = [
-            'G4', 'G4', 'A4', 'G4', 'C5', 'B4',
-            'G4', 'G4', 'A4', 'G4', 'D5', 'C5',
-            'G4', 'G4', 'G5', 'E5', 'C5', 'B4', 'A4',
-            'F5', 'F5', 'E5', 'C5', 'D5', 'C5',
+            'E5', 'G5', 'E5', 'C5',
+            'D5', 'F5', 'D5', 'B4',
+            'C5', 'E5', 'G5', 'C6',
+            'B5', 'G5', 'E5', 'C5',
+            'A4', 'C5', 'E5', 'A5',
+            'G5', 'E5', 'D5', 'C5',
         ];
 
-        const dogBassLine = ['C3', 'G3', 'C3', 'G3', 'F3', 'G3', 'C3', 'G3'];
+        const dogBassLine = ['C3', 'E3', 'G3', 'C3', 'A2', 'E3', 'G3', 'C3'];
 
         function spawnDogs() {
             const emojis = ['🐕', '🦮', '🐶', '🐾'];
