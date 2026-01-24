@@ -1136,6 +1136,7 @@
         let swirlLead = null;
         let swirlArp = null;
         let swirlArp2 = null;
+        let swirlArp2Filter = null;
         let swirlKick = null;
         let swirlSnare = null;
         let swirlPlaying = false;
@@ -1198,15 +1199,13 @@
                 }).connect(arpCrush);
                 swirlArp.volume.value = -16;
 
-                // Second arp - sawtooth with manual filter sweep
-                const arp2Filter = new Tone.Filter(400, 'lowpass', -24).toDestination();
-                const lfo = new Tone.LFO('2n', 100, 4000).connect(arp2Filter.frequency);
-                lfo.start();
+                // Second arp - sawtooth with scheduled filter sweep
+                swirlArp2Filter = new Tone.Filter(200, 'lowpass', -24).toDestination();
 
                 swirlArp2 = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
                     envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.2 }
-                }).connect(arp2Filter);
+                }).connect(swirlArp2Filter);
                 swirlArp2.volume.value = -10;
 
                 // Kick drum
@@ -1254,7 +1253,11 @@
                     });
                 }
 
-                // Second arp - slower, filtered sawtooth
+                // Second arp - slower, filtered sawtooth with manual sweep
+                swirlArp2Filter.frequency.setValueAtTime(200, barStart);
+                swirlArp2Filter.frequency.linearRampToValueAtTime(3000, barStart + (4 * eighth));
+                swirlArp2Filter.frequency.linearRampToValueAtTime(200, barStart + (8 * eighth));
+
                 swirlArp2Pat.forEach((note, i) => {
                     swirlArp2.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
                 });
