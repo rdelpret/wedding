@@ -64,6 +64,7 @@
             text-transform: uppercase;
             color: #6a6a6a;
             margin-bottom: 20px;
+            margin-top: 15px;
         }
 
         .name {
@@ -137,7 +138,7 @@
             font-size: 0.55rem;
             letter-spacing: 1px;
             color: #aaa;
-            margin-top: 60px;
+            margin-top: 80px;
         }
 
         .version {
@@ -255,12 +256,14 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 20px;
+            padding: 15px 10px;
             text-align: center;
             background-color: #f5f0e6;
             display: flex;
             justify-content: center;
-            gap: 40px;
+            flex-wrap: wrap;
+            gap: 15px 25px;
+            z-index: 100;
         }
 
         .nav a {
@@ -283,7 +286,17 @@
         /* Mobile (default) */
         @media (max-width: 480px) {
             body {
-                padding: 30px 15px;
+                padding: 90px 15px 30px;
+            }
+
+            .nav {
+                gap: 10px 15px;
+                padding: 12px 8px;
+            }
+
+            .nav a {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
             }
 
             .venue-illustration {
@@ -301,6 +314,7 @@
                 font-size: 0.6rem;
                 letter-spacing: 3px;
                 margin-bottom: 15px;
+                margin-top: 10px;
             }
 
             .name {
