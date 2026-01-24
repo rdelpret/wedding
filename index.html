@@ -450,7 +450,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.5</span>
+        <span class="version">v.0.1.6</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1151,6 +1151,172 @@
         document.getElementById('groomBtn').addEventListener('click', async () => {
             await Tone.start();
             playGroomJingle();
+        });
+
+        // Mobile touch easter eggs
+        // Long press handlers for touchscreen devices
+        const touchTargets = {
+            'diana': { element: null, timer: null, action: 'bride' },
+            'robert': { element: null, timer: null, action: 'groom' },
+            'date': { element: null, timer: null, action: 'ring' },
+            'venue': { element: null, timer: null, action: 'disco' },
+            'photo': { element: null, timer: null, action: 'love' }
+        };
+
+        const LONG_PRESS_DURATION = 750; // ms
+
+        async function triggerMobileEasterEgg(action) {
+            await Tone.start();
+            switch(action) {
+                case 'ring':
+                    document.getElementById('musicPlayer').classList.add('visible');
+                    playArpeggio();
+                    break;
+                case 'love':
+                    document.getElementById('heartPlayer').classList.add('visible');
+                    playLoveCharmer();
+                    break;
+                case 'lips':
+                    document.getElementById('lipsPlayer').classList.add('visible');
+                    playLipsJingle();
+                    break;
+                case 'flower':
+                    document.getElementById('flowerPlayer').classList.add('visible');
+                    playFlowerJingle();
+                    break;
+                case 'cake':
+                    document.getElementById('cakePlayer').classList.add('visible');
+                    playCakeJingle();
+                    break;
+                case 'disco':
+                    document.getElementById('discoPlayer').classList.add('visible');
+                    playDiscoTrack();
+                    break;
+                case 'toast':
+                    document.getElementById('toastPlayer').classList.add('visible');
+                    playToastJingle();
+                    break;
+                case 'sax':
+                    document.getElementById('saxPlayer').classList.add('visible');
+                    playSaxJingle();
+                    break;
+                case 'bride':
+                    document.getElementById('bridePlayer').classList.add('visible');
+                    playBrideJingle();
+                    break;
+                case 'groom':
+                    document.getElementById('groomPlayer').classList.add('visible');
+                    playGroomJingle();
+                    break;
+                case 'swirlbridge':
+                    document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
+                    playSwirlbridge();
+                    break;
+            }
+        }
+
+        function setupLongPress(element, action) {
+            let timer = null;
+            let startX, startY;
+
+            element.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                timer = setTimeout(() => {
+                    // Vibrate if supported
+                    if (navigator.vibrate) navigator.vibrate(50);
+                    triggerMobileEasterEgg(action);
+                }, LONG_PRESS_DURATION);
+            }, { passive: true });
+
+            element.addEventListener('touchmove', (e) => {
+                if (timer) {
+                    const moveX = e.touches[0].clientX;
+                    const moveY = e.touches[0].clientY;
+                    // Cancel if moved more than 10px
+                    if (Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                }
+            }, { passive: true });
+
+            element.addEventListener('touchend', () => {
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+            }, { passive: true });
+
+            element.addEventListener('touchcancel', () => {
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+            }, { passive: true });
+        }
+
+        // Setup touch targets after DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Find name elements
+            const names = document.querySelectorAll('.name');
+            if (names[0]) setupLongPress(names[0], 'bride');  // Diana
+            if (names[1]) setupLongPress(names[1], 'groom');  // Robert
+
+            // Find date
+            const date = document.querySelector('.date');
+            if (date) setupLongPress(date, 'ring');
+
+            // Find venue
+            const venue = document.querySelector('.venue');
+            if (venue) setupLongPress(venue, 'disco');
+
+            // Find photo - tap pattern for special easter eggs
+            const photo = document.querySelector('.venue-illustration');
+            if (photo) {
+                let tapCount = 0;
+                let lastTap = 0;
+                const TAP_TIMEOUT = 500;
+
+                photo.addEventListener('click', async (e) => {
+                    const now = Date.now();
+                    if (now - lastTap < TAP_TIMEOUT) {
+                        tapCount++;
+                    } else {
+                        tapCount = 1;
+                    }
+                    lastTap = now;
+
+                    // 5 taps reveals swirlbridge (all easter eggs)
+                    if (tapCount === 5) {
+                        tapCount = 0;
+                        await triggerMobileEasterEgg('swirlbridge');
+                    }
+                    // 3 taps triggers love
+                    else if (tapCount === 3) {
+                        await triggerMobileEasterEgg('love');
+                    }
+                });
+
+                // Long press on photo triggers flower
+                setupLongPress(photo, 'flower');
+            }
+
+            // Ampersand (&) - toast on long press
+            const ampersand = document.querySelector('.ampersand');
+            if (ampersand) setupLongPress(ampersand, 'toast');
+
+            // Divider - sax on long press
+            const dividers = document.querySelectorAll('.divider');
+            dividers.forEach(div => setupLongPress(div, 'sax'));
+
+            // Version number - lips (hidden)
+            const version = document.querySelector('.version');
+            if (version) setupLongPress(version, 'lips');
+
+            // Webmaster credit - cake (hidden)
+            const webmaster = document.querySelector('.webmaster');
+            if (webmaster) setupLongPress(webmaster, 'cake');
         });
 
         // Swirlbridge - the ultimate chiptune dub experience
