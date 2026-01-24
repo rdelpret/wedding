@@ -294,10 +294,29 @@
             border: 1px solid #c4b59d;
             padding: 15px 20px 15px 20px;
             max-width: 240px;
-            max-height: 50vh;
-            overflow-y: auto;
+            max-height: calc(100vh - 70px - 330px);
+            min-height: 150px;
+            overflow-y: scroll;
             text-align: left;
             font-size: 0.85rem;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(196, 181, 157, 0.2);
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #c4b59d;
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #a89a7d;
         }
 
         .modal-close {
@@ -597,7 +616,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.33</span>
+        <span class="version">v.0.1.34</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
