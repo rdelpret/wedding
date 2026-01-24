@@ -1250,9 +1250,14 @@
                 }
 
                 // Second arp - slower, filtered sawtooth with manual sweep
-                swirlArp2Filter.frequency.setValueAtTime(200, barStart);
-                swirlArp2Filter.frequency.linearRampToValueAtTime(3000, barStart + (4 * eighth));
-                swirlArp2Filter.frequency.linearRampToValueAtTime(200, barStart + (8 * eighth));
+                const sweepUp = barStart;
+                const sweepPeak = barStart + (4 * eighth);
+                const sweepDown = barStart + (8 * eighth);
+
+                swirlArp2Filter.frequency.cancelScheduledValues(sweepUp);
+                swirlArp2Filter.frequency.setValueAtTime(200, sweepUp);
+                swirlArp2Filter.frequency.exponentialRampToValueAtTime(3000, sweepPeak);
+                swirlArp2Filter.frequency.exponentialRampToValueAtTime(200, sweepDown);
 
                 swirlArp2Pat.forEach((note, i) => {
                     swirlArp2.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
