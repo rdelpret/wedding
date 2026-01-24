@@ -241,6 +241,11 @@
             bottom: 250px;
         }
 
+        #musicPlayer2 {
+            left: 15px;
+            bottom: 290px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -473,7 +478,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.17</span>
+        <span class="version">v.0.1.18</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -517,6 +522,9 @@
     </div>
     <div class="music-player" id="xmasPlayer">
         <button class="play-btn" id="xmasBtn">🎄</button>
+    </div>
+    <div class="music-player" id="musicPlayer2">
+        <button class="play-btn" id="musicBtn2">🎵</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -694,6 +702,12 @@
                 typedKeys = '';
                 await Tone.start();
                 playXmasJingle();
+            }
+            if (typedKeys.includes('music')) {
+                document.getElementById('musicPlayer2').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playMusicJingle();
             }
         });
 
@@ -1398,6 +1412,84 @@
         document.getElementById('xmasBtn').addEventListener('click', async () => {
             await Tone.start();
             playXmasJingle();
+        });
+
+        // Music - groovy dance melody
+        let musicSynth2 = null;
+        let musicBass2 = null;
+
+        // Groovy "music makes people come together" inspired melody with rhythm
+        const musicMelody2 = [
+            ['G4', 1], ['G4', 1], ['F4', 1], ['E4', 1], ['D4', 2],
+            ['G4', 1], ['G4', 1], ['F4', 1], ['E4', 1], ['D4', 2],
+            ['C4', 1], ['D4', 1], ['E4', 1], ['F4', 1], ['G4', 2], ['G4', 2],
+        ];
+
+        const musicBassLine2 = [
+            ['C2', 1], ['C2', 1], ['G2', 1], ['G2', 1],
+            ['A2', 1], ['A2', 1], ['E2', 1], ['E2', 1],
+        ];
+
+        function spawnMusicNotes() {
+            const emojis = ['🎵', '🎶', '🎤', '💃', '🕺'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const note = document.createElement('div');
+                    note.className = 'falling-ring';
+                    note.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    note.style.left = Math.random() * 100 + 'vw';
+                    note.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(note);
+                    setTimeout(() => note.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playMusicJingle() {
+            if (!musicSynth2) {
+                // Funky synth sound
+                const musicDelay = new Tone.PingPongDelay('8n', 0.2).toDestination();
+                musicDelay.wet.value = 0.2;
+
+                musicSynth2 = new Tone.Synth({
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.3, release: 0.3 }
+                }).connect(musicDelay);
+                musicSynth2.volume.value = -8;
+
+                // Groovy bass
+                const bassFilter = new Tone.Filter(250, 'lowpass').toDestination();
+                musicBass2 = new Tone.Synth({
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.5, release: 0.2 }
+                }).connect(bassFilter);
+                musicBass2.volume.value = -6;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+
+            // Play melody
+            let time = Tone.now();
+            musicMelody2.forEach(([note, dur]) => {
+                musicSynth2.triggerAttackRelease(note, eighth * dur * 0.9, time);
+                time += eighth * dur;
+            });
+
+            // Play bass loop twice
+            let bassTime = Tone.now();
+            for (let rep = 0; rep < 2; rep++) {
+                musicBassLine2.forEach(([note, dur]) => {
+                    musicBass2.triggerAttackRelease(note, eighth * dur * 0.8, bassTime);
+                    bassTime += eighth * dur;
+                });
+            }
+
+            spawnMusicNotes();
+        }
+
+        document.getElementById('musicBtn2').addEventListener('click', async () => {
+            await Tone.start();
+            playMusicJingle();
         });
 
         // Mobile easter eggs - tap pattern on photo
