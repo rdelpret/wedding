@@ -373,13 +373,16 @@
         let midiData = null;
         let isPlaying = false;
         let synths = [];
+        let delay = null;
 
         // Load MIDI file
         fetch('bridal-march.mid')
             .then(response => response.arrayBuffer())
             .then(data => {
                 midiData = new Midi(data);
-            });
+                console.log('MIDI loaded:', midiData.tracks.length, 'tracks');
+            })
+            .catch(err => console.error('MIDI load error:', err));
 
         // Easter egg: type "ring" to reveal music player and play opening phrase
         let typedKeys = '';
@@ -389,26 +392,31 @@
             if (typedKeys === 'ring') {
                 document.getElementById('musicPlayer').classList.add('visible');
                 typedKeys = '';
-                // Play opening phrase once
                 await Tone.start();
-                playMidi(false);
+                playMidi();
             }
         });
 
-        // Create delay effect
-        const delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
-        delay.wet.value = 0.25;
-
-        function playMidi(loop = false) {
-            if (!midiData) return;
+        function playMidi() {
+            if (!midiData) {
+                console.log('No MIDI data');
+                return;
+            }
 
             // Stop any existing synths
-            synths.forEach(s => s.disconnect());
-            synths = [];
+            stopMidi();
 
-            const now = Tone.now();
+            // Create delay effect after Tone is started
+            if (!delay) {
+                delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
+                delay.wet.value = 0.25;
+            }
 
-            midiData.tracks.forEach(track => {
+            const now = Tone.now() + 0.1;
+
+            midiData.tracks.forEach((track, i) => {
+                if (track.notes.length === 0) return;
+
                 const synth = new Tone.PolySynth(Tone.Synth, {
                     oscillator: { type: 'sawtooth' },
                     envelope: { attack: 0.005, decay: 0.2, sustain: 0.1, release: 0.3 }
@@ -444,7 +452,7 @@
                 btn.textContent = 'Play Music';
                 isPlaying = false;
             } else {
-                playMidi(true);
+                playMidi();
                 btn.textContent = 'Stop Music';
                 isPlaying = true;
             }
