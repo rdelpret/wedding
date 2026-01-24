@@ -267,6 +267,74 @@
 
         .play-btn:hover {
             background-color: #c4b59d;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #f5f0e6;
+            padding: 30px 40px;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 20px;
+        }
+
+        .modal-list {
+            list-style: none;
+            text-align: left;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #4a4a4a;
+        }
+
+        .modal-list code {
+            background-color: rgba(196, 181, 157, 0.3);
+            padding: 2px 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #5a5a5a;
+            cursor: pointer;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+        }
+
+        .modal-close:hover {
+            color: #3d3d3d;
             color: #fff;
         }
 
@@ -483,7 +551,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.22</span>
+        <span class="version">v.0.1.23</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -533,6 +601,59 @@
     </div>
     <div class="music-player" id="ghostPlayer">
         <button class="play-btn" id="ghostBtn">👻</button>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <span class="modal-close" id="adminClose">&times;</span>
+            <h2 class="modal-title">Easter Egg Keywords</h2>
+            <ul class="modal-list">
+                <li>💍 <code>ring</code></li>
+                <li>❤️ <code>love</code> (reveals all)</li>
+                <li>💋 <code>lips</code></li>
+                <li>🌸 <code>flower</code></li>
+                <li>🎂 <code>cake</code></li>
+                <li>🌀 <code>swirl</code></li>
+                <li>🐕 <code>mango</code></li>
+                <li>🎵 <code>music</code></li>
+                <li>🪩 <code>disco</code></li>
+                <li>🥂 <code>toast</code></li>
+                <li>🎷 <code>sax</code></li>
+                <li>👰 <code>bride</code></li>
+                <li>🤵 <code>groom</code></li>
+                <li>💒 <code>chapel</code></li>
+                <li>🎄 <code>xmas</code></li>
+                <li>👻 <code>ghost</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hunt Modal -->
+    <div class="modal-overlay" id="huntModal">
+        <div class="modal-content">
+            <span class="modal-close" id="huntClose">&times;</span>
+            <h2 class="modal-title">Easter Egg Hunt</h2>
+            <ul class="modal-list">
+                <li>💍 Something you wear on your finger</li>
+                <li>❤️ What Diana & Robbie share</li>
+                <li>💋 A sign of affection</li>
+                <li>🌸 Found in a garden</li>
+                <li>🎂 Cut at celebrations</li>
+                <li>🌀 Round and round</li>
+                <li>🐕 One of the pups</li>
+                <li>🎵 Madonna makes the people...</li>
+                <li>🪩 Dance floor sparkle</li>
+                <li>🥂 Raise a glass</li>
+                <li>🎷 Smooth jazz instrument</li>
+                <li>👰 She walks down the aisle</li>
+                <li>🤵 He waits at the altar</li>
+                <li>💒 Where vows are exchanged</li>
+                <li>🎄 December holiday</li>
+                <li>👻 Boo!</li>
+            </ul>
+            <p style="margin-top: 20px; font-style: italic; font-size: 0.9rem;">Mobile: Tap the photo 7 times!</p>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -722,6 +843,32 @@
                 typedKeys = '';
                 await Tone.start();
                 playGhostJingle();
+            }
+            if (typedKeys.includes('admin')) {
+                document.getElementById('adminModal').classList.add('active');
+                typedKeys = '';
+            }
+            if (typedKeys.includes('hunt')) {
+                document.getElementById('huntModal').classList.add('active');
+                typedKeys = '';
+            }
+        });
+
+        // Modal close handlers
+        document.getElementById('adminClose').addEventListener('click', () => {
+            document.getElementById('adminModal').classList.remove('active');
+        });
+        document.getElementById('huntClose').addEventListener('click', () => {
+            document.getElementById('huntModal').classList.remove('active');
+        });
+        document.getElementById('adminModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('adminModal')) {
+                document.getElementById('adminModal').classList.remove('active');
+            }
+        });
+        document.getElementById('huntModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('huntModal')) {
+                document.getElementById('huntModal').classList.remove('active');
             }
         });
 
