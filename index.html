@@ -158,6 +158,10 @@
             opacity: 1;
         }
 
+        #snakePlayer {
+            left: 60px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -382,6 +386,9 @@
     <div class="music-player" id="musicPlayer">
         <button class="play-btn" id="playBtn">💍</button>
     </div>
+    <div class="music-player" id="snakePlayer">
+        <button class="play-btn" id="snakeBtn">🐍</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
@@ -396,17 +403,30 @@
             'C#5', 'G#5', 'C6',
         ];
 
-        // Easter egg: type "ring" to reveal music player and play
+        // Snake charmer melody - E phrygian dominant / Arabic scale
+        const snakeMelody = [
+            'E4', 'F4', 'G#4', 'A4', 'B4', 'C5', 'D5', 'E5',
+            'D5', 'C5', 'B4', 'A4', 'G#4', 'F4', 'E4',
+        ];
+
+        // Easter eggs: type "ring" or "snake"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 4) typedKeys = typedKeys.slice(-4);
-            if (typedKeys === 'ring') {
+            if (typedKeys.length > 5) typedKeys = typedKeys.slice(-5);
+
+            if (typedKeys.includes('ring')) {
                 document.getElementById('musicPlayer').classList.add('visible');
                 typedKeys = '';
                 await Tone.start();
                 playArpeggio();
+            }
+            if (typedKeys.includes('snake')) {
+                document.getElementById('snakePlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playSnakeCharmer();
             }
         });
 
@@ -456,6 +476,52 @@
         document.getElementById('playBtn').addEventListener('click', async () => {
             await Tone.start();
             playArpeggio();
+        });
+
+        function spawnSnakes() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const snake = document.createElement('div');
+                    snake.className = 'falling-ring';
+                    snake.textContent = '🐍';
+                    snake.style.left = Math.random() * 100 + 'vw';
+                    snake.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(snake);
+                    setTimeout(() => snake.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playSnakeCharmer() {
+            if (!synth) {
+                Tone.Transport.bpm.value = 120;
+
+                delay = new Tone.FeedbackDelay('8n', 0.3).toDestination();
+                delay.wet.value = 0.25;
+
+                synth = new Tone.Synth({
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.005, decay: 0.2, sustain: 0.1, release: 0.3 }
+                }).connect(delay);
+                synth.volume.value = -8;
+            }
+
+            const sixteenth = Tone.Time('16n').toSeconds();
+
+            // Play 2 times
+            for (let repeat = 0; repeat < 2; repeat++) {
+                const startTime = Tone.now() + (repeat * snakeMelody.length * sixteenth);
+                snakeMelody.forEach((note, i) => {
+                    synth.triggerAttackRelease(note, '16n', startTime + (i * sixteenth));
+                });
+            }
+
+            spawnSnakes();
+        }
+
+        document.getElementById('snakeBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playSnakeCharmer();
         });
     </script>
 </body>
