@@ -434,7 +434,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.21c081b</span>
+        <span class="version">v.9c70513</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1141,12 +1141,19 @@
         let swirlBass = null;
         let swirlArp = null;
         let swirlArpFilter = null;
+        let swirlSkank = null;
         let swirlKick = null;
         let swirlSnare = null;
         let swirlPlaying = false;
 
         const swirlBassPat = ['E1', 'E1', 'G1', 'A1', 'E1', 'E1', 'B1', 'A1'];
         const swirlArpPat = ['E3', 'G3', 'B3', 'E4', 'G4', 'B4', 'E5', 'B4', 'G4', 'E4', 'B3', 'G3'];
+        const swirlSkankChords = [
+            ['E4', 'G4', 'B4'],  // Em
+            ['E4', 'G4', 'B4'],  // Em
+            ['G4', 'B4', 'D5'],  // G
+            ['A4', 'C5', 'E5'],  // Am
+        ];
 
         function spawnSpirals() {
             for (let i = 0; i < 60; i++) {
@@ -1184,6 +1191,14 @@
                     envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.2 }
                 }).connect(swirlArpFilter);
                 swirlArp.volume.value = -10;
+
+                // Reggae skank chords
+                const skankFilter = new Tone.Filter(2000, 'highpass').toDestination();
+                swirlSkank = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'pulse', width: 0.3 },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.05, release: 0.1 }
+                }).connect(skankFilter);
+                swirlSkank.volume.value = -14;
 
                 // Kick drum
                 swirlKick = new Tone.MembraneSynth({
@@ -1229,6 +1244,14 @@
                 swirlArpPat.forEach((note, i) => {
                     swirlArp.triggerAttackRelease(note, '16n', barStart + (i * sixteenth * 1.33));
                 });
+
+                // Reggae skank on upbeats (the "and" of each beat)
+                const chordIndex = bar % swirlSkankChords.length;
+                const chord = swirlSkankChords[chordIndex];
+                for (let beat = 0; beat < 4; beat++) {
+                    const upbeatTime = barStart + (beat * 2 * eighth) + eighth;
+                    swirlSkank.triggerAttackRelease(chord, '16n', upbeatTime);
+                }
 
                 // Kick on 1 and 3
                 swirlKick.triggerAttackRelease('C1', '8n', barStart);
