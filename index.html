@@ -473,7 +473,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.16</span>
+        <span class="version">v.0.1.17</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1348,14 +1348,14 @@
         // Christmas - festive bells melody
         let xmasSynth = null;
 
-        // Jingle Bells melody
+        // Jingle Bells with proper rhythm: [note, duration in eighths]
         const xmasMelody = [
-            'E5', 'E5', 'E5',
-            'E5', 'E5', 'E5',
-            'E5', 'G5', 'C5', 'D5', 'E5',
-            'F5', 'F5', 'F5', 'F5',
-            'F5', 'E5', 'E5', 'E5',
-            'E5', 'D5', 'D5', 'E5', 'D5', 'G5',
+            ['E5', 1], ['E5', 1], ['E5', 2],
+            ['E5', 1], ['E5', 1], ['E5', 2],
+            ['E5', 1], ['G5', 1], ['C5', 1.5], ['D5', 0.5], ['E5', 4],
+            ['F5', 1], ['F5', 1], ['F5', 1.5], ['F5', 0.5],
+            ['F5', 1], ['E5', 1], ['E5', 1], ['E5', 0.5], ['E5', 0.5],
+            ['E5', 1], ['D5', 1], ['D5', 1], ['E5', 1], ['D5', 2], ['G5', 2],
         ];
 
         function spawnTrees() {
@@ -1387,9 +1387,10 @@
             }
 
             const eighth = Tone.Time('8n').toSeconds();
-            const startTime = Tone.now();
-            xmasMelody.forEach((note, i) => {
-                xmasSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+            let time = Tone.now();
+            xmasMelody.forEach(([note, dur]) => {
+                xmasSynth.triggerAttackRelease(note, eighth * dur * 0.9, time);
+                time += eighth * dur;
             });
             spawnTrees();
         }
