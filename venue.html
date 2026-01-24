@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Venue | Diana & Robert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            overscroll-behavior: none;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #f5f0e6;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #6a6a6a;
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4c4c4;
+            margin: 40px auto;
+        }
+
+        .venue-hero {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .venue-hero img {
+            width: 100%;
+            height: auto;
+        }
+
+        .section-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 25px;
+        }
+
+        .venue-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .venue-text a {
+            color: #4a4a4a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .venue-text a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .amenity {
+            padding: 20px;
+            background-color: rgba(196, 181, 157, 0.1);
+        }
+
+        .amenity-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .amenity-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            object-position: center;
+            background-color: #e5e0d6;
+        }
+
+        .gallery-grid .wide {
+            grid-column: span 3;
+            aspect-ratio: 3 / 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: none;
+            padding: 15px 35px;
+            border: 1px solid #c4b59d;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: #c4b59d;
+            color: #fff;
+        }
+
+        .notice-box {
+            background-color: rgba(196, 181, 157, 0.2);
+            border: 1px solid #c4b59d;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+
+        .notice-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 12px;
+        }
+
+        .notice-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 10px;
+            text-align: center;
+            background-color: #f5f0e6;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px 25px;
+            z-index: 100;
+        }
+
+        .nav a {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .nav a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            body {
+                padding: 80px 15px 40px;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+                letter-spacing: 5px;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 0.85rem;
+                letter-spacing: 4px;
+            }
+
+            .venue-text {
+                font-size: 1.1rem;
+            }
+
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid img {
+                aspect-ratio: 1 / 1;
+            }
+
+            .gallery-grid .wide {
+                grid-column: span 2;
+                aspect-ratio: 2 / 1;
+            }
+
+            .nav {
+                gap: 10px 15px;
+                padding: 12px 8px;
+            }
+
+            .nav a {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            .page-title {
+                font-size: 2rem;
+                letter-spacing: 10px;
+            }
+
+            .page-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                letter-spacing: 6px;
+            }
+
+            .venue-text {
+                font-size: 1.3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .gallery-grid .wide {
+                grid-column: span 3;
+                aspect-ratio: 3 / 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="photo-gallery.html">Photo Gallery</a>
+        <a href="venue.html">The Venue</a>
+        <a href="city.html">The City</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">The Venue</h1>
+        <p class="page-subtitle">Pestana Palacio do Freixo, Porto</p>
+
+        <div class="divider"></div>
+
+        <div class="venue-hero">
+            <img src="venue.png" alt="Pestana Palacio do Freixo">
+        </div>
+
+        <div class="notice-box">
+            <p class="notice-title">Please Do Not Book Yet</p>
+            <p class="notice-text">We are arranging a room block with special rates for our guests. Details will be shared soon. Please wait for our booking information before making any reservations.</p>
+        </div>
+
+        <p class="venue-text">
+            Our celebration will take place at the magnificent Pestana Palacio do Freixo, an 18th-century baroque palace designed by the renowned Italian architect Nicolau Nasoni. Perched along the banks of the Douro River, this National Monument has been welcoming guests since 1910 and is recognised as a contributing site to Porto's UNESCO World Heritage status.
+        </p>
+
+        <p class="venue-text">
+            The palace offers breathtaking views of the Douro River and is located just 3 kilometres from Porto's historic city centre, making it the perfect setting for our wedding celebration.
+        </p>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Hotel Amenities</h2>
+
+        <div class="amenities-grid">
+            <div class="amenity">
+                <h3 class="amenity-title">Accommodations</h3>
+                <p class="amenity-text">87 elegantly appointed rooms and suites, many featuring stunning Douro River views and complimentary internet access.</p>
+            </div>
+            <div class="amenity">
+                <h3 class="amenity-title">Dining</h3>
+                <p class="amenity-text">Palatium restaurant serves refined Portuguese cuisine beneath restored 1850s frescos. The Nasoni Bar offers cocktails and light fare.</p>
+            </div>
+            <div class="amenity">
+                <h3 class="amenity-title">Wellness</h3>
+                <p class="amenity-text">The Magic SPA features treatments, massages, sauna, Turkish bath, and an indoor heated pool available year-round.</p>
+            </div>
+            <div class="amenity">
+                <h3 class="amenity-title">Recreation</h3>
+                <p class="amenity-text">Panoramic outdoor swimming pool with river views (seasonal), fully-equipped fitness centre, and beautiful palace gardens.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Gallery</h2>
+
+        <div class="gallery-grid">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-surroundings-facade-palace.jpg" alt="Palace exterior view">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-surroundings-gardens.jpg" alt="Palace gardens">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-surroundings-fountain.jpg" alt="Palace fountain">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-restaurants-palatium.jpg" alt="Palatium restaurant">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-surroundings-facade-night.jpg" alt="Palace at night">
+            <img src="venue-gallery/pestana-palacio-freixo-gallery-surroundings-facade-river.jpg" alt="Douro River view">
+            <img class="wide" src="venue-gallery/pestana-palacio-freixo-gallery-facilities-outdoor-pool.jpg" alt="Outdoor pool">
+        </div>
+
+        <div class="divider"></div>
+
+        <a href="https://www.pestana.com/en/hotel/freixo-palace" target="_blank" rel="noopener" class="cta-button">Visit Hotel Website</a>
+
+        <div class="divider"></div>
+    </div>
+</body>
+</html>

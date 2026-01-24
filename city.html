@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The City | Diana & Robert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            overscroll-behavior: none;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #f5f0e6;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #6a6a6a;
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4c4c4;
+            margin: 40px auto;
+        }
+
+        .city-hero {
+            width: 100%;
+            margin: 0 auto 40px;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+
+        .city-hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .city-hero img.active {
+            opacity: 1;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            object-position: center;
+            background-color: #e5e0d6;
+        }
+
+        .section-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 25px;
+        }
+
+        .city-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .city-text a {
+            color: #4a4a4a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .city-text a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .highlight {
+            padding: 20px;
+            background-color: rgba(196, 181, 157, 0.1);
+        }
+
+        .highlight-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .highlight-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .attraction-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .attraction {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(196, 181, 157, 0.3);
+        }
+
+        .attraction:last-child {
+            border-bottom: none;
+        }
+
+        .attraction-name {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 8px;
+        }
+
+        .attraction-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .cta-button {
+            display: inline-block;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: none;
+            padding: 15px 35px;
+            border: 1px solid #c4b59d;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: #c4b59d;
+            color: #fff;
+        }
+
+        .notice-box {
+            background-color: rgba(196, 181, 157, 0.2);
+            border: 1px solid #c4b59d;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+
+        .notice-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 12px;
+        }
+
+        .notice-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 10px;
+            text-align: center;
+            background-color: #f5f0e6;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px 25px;
+            z-index: 100;
+        }
+
+        .nav a {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .nav a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            body {
+                padding: 80px 15px 40px;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+                letter-spacing: 5px;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 0.85rem;
+                letter-spacing: 4px;
+            }
+
+            .city-text {
+                font-size: 1.1rem;
+            }
+
+            .highlights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav {
+                gap: 10px 15px;
+                padding: 12px 8px;
+            }
+
+            .nav a {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            .page-title {
+                font-size: 2rem;
+                letter-spacing: 10px;
+            }
+
+            .page-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                letter-spacing: 6px;
+            }
+
+            .city-text {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="photo-gallery.html">Photo Gallery</a>
+        <a href="venue.html">The Venue</a>
+        <a href="city.html">The City</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">The City</h1>
+        <p class="page-subtitle">Porto, Portugal</p>
+
+        <div class="divider"></div>
+
+        <div class="city-hero" id="carousel">
+            <img src="city-gallery/IMG_8632.jpeg" alt="Porto, Portugal" class="active">
+            <img src="city-gallery/IMG_8631.jpeg" alt="Porto, Portugal">
+            <img src="city-gallery/Porto-by-prosign-2048x1365.jpg" alt="Porto, Portugal">
+            <img src="city-gallery/321-porto-a.jpg" alt="Porto, Portugal">
+            <img src="city-gallery/stock-photo-the-clerigos-church-igreja-dos-clerigos-is-a-baroque-church-in-the-city-of-porto-in-portugal-232774924.avif" alt="Clerigos Church">
+            <img src="city-gallery/porto-leixoes-portugal-historic-facade.avif" alt="Porto historic facade">
+            <img src="city-gallery/porto-7.jpg" alt="Porto streets">
+            <img src="city-gallery/porto-2.jpg" alt="Porto views">
+        </div>
+
+        <div class="notice-box">
+            <p class="notice-title">Travel Planning</p>
+            <p class="notice-text">We recommend waiting to book your travel until the full events schedule has been released. More details coming soon.</p>
+        </div>
+
+        <p class="city-text">
+            Porto is Portugal's second-largest city and one of Europe's most captivating destinations. Perched along the banks of the Douro River, this UNESCO World Heritage city enchants visitors with its colourful tiled buildings, winding medieval streets, and warm hospitality. It's no wonder we chose this magical city for our celebration.
+        </p>
+
+        <p class="city-text">
+            Known as the birthplace of Port wine, Porto offers a perfect blend of historic charm and contemporary culture. From world-class cuisine to stunning architecture, there's something to discover around every cobblestoned corner.
+        </p>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Why You'll Love It</h2>
+
+        <div class="highlights-grid">
+            <div class="highlight">
+                <h3 class="highlight-title">Rich History</h3>
+                <p class="highlight-text">The Ribeira district is a UNESCO World Heritage Site with centuries-old architecture and stunning azulejo tile work throughout the city.</p>
+            </div>
+            <div class="highlight">
+                <h3 class="highlight-title">Port Wine</h3>
+                <p class="highlight-text">Visit the famous wine cellars in Vila Nova de Gaia, just across the river, for tastings of the region's legendary fortified wine.</p>
+            </div>
+            <div class="highlight">
+                <h3 class="highlight-title">Incredible Food</h3>
+                <p class="highlight-text">From fresh seafood to the iconic Francesinha sandwich and flaky pasteis de nata, Porto is a food lover's paradise.</p>
+            </div>
+            <div class="highlight">
+                <h3 class="highlight-title">Douro Valley</h3>
+                <p class="highlight-text">Take a day trip to the stunning Douro Valley wine region, a short journey from the city with breathtaking vineyard landscapes.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Must-See Attractions</h2>
+
+        <div class="attraction-list">
+            <div class="attraction">
+                <h3 class="attraction-name">Livraria Lello</h3>
+                <p class="attraction-desc">One of the world's most beautiful bookshops, featuring a stunning neo-Gothic interior and iconic red staircase that inspired Harry Potter.</p>
+            </div>
+            <div class="attraction">
+                <h3 class="attraction-name">Dom Luis I Bridge</h3>
+                <p class="attraction-desc">The iconic double-deck iron bridge designed by a student of Gustave Eiffel, offering spectacular views of both Porto and Gaia.</p>
+            </div>
+            <div class="attraction">
+                <h3 class="attraction-name">Ribeira District</h3>
+                <p class="attraction-desc">The historic heart of Porto with colourful buildings cascading down to the riverfront, perfect for wandering and dining al fresco.</p>
+            </div>
+            <div class="attraction">
+                <h3 class="attraction-name">Sao Bento Station</h3>
+                <p class="attraction-desc">A working train station adorned with over 20,000 stunning blue and white azulejo tiles depicting Portugal's history.</p>
+            </div>
+            <div class="attraction">
+                <h3 class="attraction-name">Clerigos Tower</h3>
+                <p class="attraction-desc">Climb the 225 steps of this baroque bell tower for panoramic views across the city's terracotta rooftops to the Atlantic.</p>
+            </div>
+            <div class="attraction">
+                <h3 class="attraction-name">Palacio da Bolsa</h3>
+                <p class="attraction-desc">A stunning 19th-century stock exchange palace featuring the breathtaking Arab Room inspired by the Alhambra.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Getting There</h2>
+
+        <p class="city-text">
+            Porto's Francisco Sa Carneiro Airport (OPO) is well-connected with direct flights from major European cities and connecting flights from North America. The airport is just 20 minutes from the city centre by metro or taxi.
+        </p>
+
+        <a href="https://www.visitporto.travel/en" target="_blank" rel="noopener" class="cta-button">Explore Porto</a>
+
+        <div class="divider"></div>
+    </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const images = carousel.querySelectorAll('img');
+        let currentIndex = 0;
+
+        function rotateCarousel() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+
+        setInterval(rotateCarousel, 4000);
+    </script>
+</body>
+</html>
