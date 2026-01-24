@@ -1196,14 +1196,10 @@
                 }).connect(arpCrush);
                 swirlArp.volume.value = -16;
 
-                // Second arp - sawtooth with filter sweep
-                const arp2Filter = new Tone.AutoFilter({
-                    frequency: '4n',
-                    baseFrequency: 80,
-                    octaves: 6,
-                    depth: 1
-                }).toDestination();
-                arp2Filter.start();
+                // Second arp - sawtooth with manual filter sweep
+                const arp2Filter = new Tone.Filter(400, 'lowpass', -24).toDestination();
+                const lfo = new Tone.LFO('2n', 100, 4000).connect(arp2Filter.frequency);
+                lfo.start();
 
                 swirlArp2 = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
