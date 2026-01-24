@@ -544,12 +544,12 @@
             'G4', 'E4', 'C4',
         ];
 
-        // Easter eggs: type "ring", "love", "lips", "flower", "cake"
+        // Easter eggs: type "ring", "love", "lips", "flower", "cake", etc.
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 6) typedKeys = typedKeys.slice(-6);
+            if (typedKeys.length > 11) typedKeys = typedKeys.slice(-11);
 
             if (typedKeys.includes('ring')) {
                 document.getElementById('musicPlayer').classList.add('visible');
@@ -610,6 +610,13 @@
                 typedKeys = '';
                 await Tone.start();
                 playGroomJingle();
+            }
+            if (typedKeys.includes('swirlbridge')) {
+                // Reveal all buttons
+                document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
+                typedKeys = '';
+                await Tone.start();
+                playSwirlbridge();
             }
         });
 
@@ -1121,6 +1128,133 @@
             await Tone.start();
             playGroomJingle();
         });
+
+        // Swirlbridge - the ultimate chiptune dub experience
+        let swirlBass = null;
+        let swirlLead = null;
+        let swirlArp = null;
+        let swirlKick = null;
+        let swirlSnare = null;
+        let swirlPlaying = false;
+
+        const swirlBassPat = ['E1', 'E1', 'G1', 'A1', 'E1', 'E1', 'B1', 'A1'];
+        const swirlLeadPat = [
+            'E4', 'G4', 'B4', 'E5', 'D5', 'B4', 'G4', 'E4',
+            'A4', 'C5', 'E5', 'A5', 'G5', 'E5', 'C5', 'A4',
+        ];
+        const swirlArpPat = ['E5', 'B5', 'G5', 'E6', 'B5', 'G5', 'E5', 'B4'];
+
+        function spawnSpirals() {
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const spiral = document.createElement('div');
+                    spiral.className = 'falling-ring';
+                    spiral.textContent = '🌀';
+                    spiral.style.left = Math.random() * 100 + 'vw';
+                    spiral.style.animationDuration = (2 + Math.random() * 4) + 's';
+                    spiral.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+                    document.body.appendChild(spiral);
+                    setTimeout(() => spiral.remove(), 8000);
+                }, i * 200);
+            }
+        }
+
+        async function playSwirlbridge() {
+            if (swirlPlaying) return;
+            swirlPlaying = true;
+
+            if (!swirlBass) {
+                // Deep dub bass
+                const bassFilter = new Tone.Filter(120, 'lowpass').toDestination();
+                swirlBass = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.01, decay: 0.3, sustain: 0.8, release: 0.5 }
+                }).connect(bassFilter);
+                swirlBass.volume.value = -4;
+
+                // Chiptune lead with dub delay
+                const dubDelay = new Tone.PingPongDelay('4n.', 0.6).toDestination();
+                dubDelay.wet.value = 0.35;
+                const bitcrush = new Tone.BitCrusher(4).connect(dubDelay);
+
+                swirlLead = new Tone.Synth({
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.1 }
+                }).connect(bitcrush);
+                swirlLead.volume.value = -14;
+
+                // Fast chiptune arp
+                const arpDelay = new Tone.FeedbackDelay('16n', 0.3).toDestination();
+                arpDelay.wet.value = 0.2;
+                const arpCrush = new Tone.BitCrusher(6).connect(arpDelay);
+
+                swirlArp = new Tone.Synth({
+                    oscillator: { type: 'pulse', width: 0.25 },
+                    envelope: { attack: 0.001, decay: 0.05, sustain: 0.1, release: 0.05 }
+                }).connect(arpCrush);
+                swirlArp.volume.value = -16;
+
+                // Kick drum
+                swirlKick = new Tone.MembraneSynth({
+                    pitchDecay: 0.05,
+                    octaves: 6,
+                    envelope: { attack: 0.001, decay: 0.3, sustain: 0, release: 0.1 }
+                }).toDestination();
+                swirlKick.volume.value = -6;
+
+                // Snare
+                const snareFilter = new Tone.Filter(1800, 'bandpass').toDestination();
+                swirlSnare = new Tone.NoiseSynth({
+                    noise: { type: 'white' },
+                    envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.1 }
+                }).connect(snareFilter);
+                swirlSnare.volume.value = -10;
+            }
+
+            Tone.Transport.bpm.value = 140;
+            const eighth = Tone.Time('8n').toSeconds();
+            const sixteenth = Tone.Time('16n').toSeconds();
+            const quarter = Tone.Time('4n').toSeconds();
+
+            // Play 8 bars
+            for (let bar = 0; bar < 8; bar++) {
+                const barStart = Tone.now() + (bar * 8 * eighth);
+
+                // Bass (8th notes)
+                swirlBassPat.forEach((note, i) => {
+                    swirlBass.triggerAttackRelease(note, '8n', barStart + (i * eighth));
+                });
+
+                // Lead melody (8th notes, every other bar)
+                if (bar % 2 === 0) {
+                    swirlLeadPat.forEach((note, i) => {
+                        swirlLead.triggerAttackRelease(note, '16n', barStart + (i * sixteenth));
+                    });
+                }
+
+                // Fast arp (16th notes)
+                for (let rep = 0; rep < 2; rep++) {
+                    swirlArpPat.forEach((note, i) => {
+                        swirlArp.triggerAttackRelease(note, '32n', barStart + (rep * 8 * sixteenth) + (i * sixteenth));
+                    });
+                }
+
+                // Kick on 1 and 3
+                swirlKick.triggerAttackRelease('C1', '8n', barStart);
+                swirlKick.triggerAttackRelease('C1', '8n', barStart + (4 * eighth));
+
+                // Snare on 2 and 4
+                swirlSnare.triggerAttackRelease('8n', barStart + (2 * eighth));
+                swirlSnare.triggerAttackRelease('8n', barStart + (6 * eighth));
+            }
+
+            spawnSpirals();
+
+            // Reset playing flag
+            setTimeout(() => {
+                swirlPlaying = false;
+            }, 8 * 8 * eighth * 1000 + 1000);
+        }
     </script>
 </body>
 </html>
