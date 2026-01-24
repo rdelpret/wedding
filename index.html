@@ -236,6 +236,11 @@
             bottom: 250px;
         }
 
+        #xmasPlayer {
+            right: 15px;
+            bottom: 250px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -468,7 +473,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.15</span>
+        <span class="version">v.0.1.16</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -509,6 +514,9 @@
     </div>
     <div class="music-player" id="chapelPlayer">
         <button class="play-btn" id="chapelBtn">💒</button>
+    </div>
+    <div class="music-player" id="xmasPlayer">
+        <button class="play-btn" id="xmasBtn">🎄</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -680,6 +688,12 @@
                 typedKeys = '';
                 await Tone.start();
                 playDogSong();
+            }
+            if (typedKeys.includes('xmas')) {
+                document.getElementById('xmasPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playXmasJingle();
             }
         });
 
@@ -1330,6 +1344,60 @@
 
             spawnDogs();
         }
+
+        // Christmas - festive bells melody
+        let xmasSynth = null;
+
+        // Jingle Bells melody
+        const xmasMelody = [
+            'E5', 'E5', 'E5',
+            'E5', 'E5', 'E5',
+            'E5', 'G5', 'C5', 'D5', 'E5',
+            'F5', 'F5', 'F5', 'F5',
+            'F5', 'E5', 'E5', 'E5',
+            'E5', 'D5', 'D5', 'E5', 'D5', 'G5',
+        ];
+
+        function spawnTrees() {
+            const emojis = ['🎄', '❄️', '🎅', '⭐', '🎁'];
+            for (let i = 0; i < 35; i++) {
+                setTimeout(() => {
+                    const tree = document.createElement('div');
+                    tree.className = 'falling-ring';
+                    tree.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    tree.style.left = Math.random() * 100 + 'vw';
+                    tree.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(tree);
+                    setTimeout(() => tree.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        async function playXmasJingle() {
+            if (!xmasSynth) {
+                // Bright bell-like sound
+                const xmasReverb = new Tone.Reverb({ decay: 2, wet: 0.3 }).toDestination();
+                await xmasReverb.generate();
+
+                xmasSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.01, decay: 0.3, sustain: 0.1, release: 0.5 }
+                }).connect(xmasReverb);
+                xmasSynth.volume.value = -6;
+            }
+
+            const eighth = Tone.Time('8n').toSeconds();
+            const startTime = Tone.now();
+            xmasMelody.forEach((note, i) => {
+                xmasSynth.triggerAttackRelease(note, '8n', startTime + (i * eighth));
+            });
+            spawnTrees();
+        }
+
+        document.getElementById('xmasBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playXmasJingle();
+        });
 
         // Mobile easter eggs - tap pattern on photo
         (function() {
