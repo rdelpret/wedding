@@ -146,9 +146,16 @@
             position: fixed;
             bottom: 10px;
             left: 15px;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 8px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .music-player.visible {
+            display: flex;
+            opacity: 1;
         }
 
         .play-btn {
@@ -356,28 +363,80 @@
     </div>
     <span class="webmaster">Webmaster: Robert DelPrete</span>
 
-    <div class="music-player">
-        <button class="play-btn" onclick="toggleMusic()">Play Music</button>
+    <div class="music-player" id="musicPlayer">
+        <button class="play-btn" id="playBtn">Play Music</button>
     </div>
-    <audio id="wedding-music" loop>
-        <source src="bridal-chorus.mp3" type="audio/mpeg">
-    </audio>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
-        const music = document.getElementById('wedding-music');
-        const btn = document.querySelector('.play-btn');
-        let isPlaying = false;
-
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                btn.textContent = 'Play Music';
-            } else {
-                music.play();
-                btn.textContent = 'Stop Music';
+        // Easter egg: type "ring" to reveal music player
+        let typedKeys = '';
+        document.addEventListener('keydown', (e) => {
+            typedKeys += e.key.toLowerCase();
+            if (typedKeys.length > 4) typedKeys = typedKeys.slice(-4);
+            if (typedKeys === 'ring') {
+                document.getElementById('musicPlayer').classList.add('visible');
+                typedKeys = '';
             }
-            isPlaying = !isPlaying;
+        });
+
+        // Bridal Chorus melody using Tone.js
+        const synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'triangle' },
+            envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.8 }
+        }).toDestination();
+        synth.volume.value = -6;
+
+        // Here Comes the Bride melody (Bridal Chorus from Lohengrin)
+        const melody = [
+            { note: 'C4', duration: '2n', time: 0 },
+            { note: 'F4', duration: '2n.', time: 0.5 },
+            { note: 'F4', duration: '8n', time: 1.25 },
+            { note: 'F4', duration: '2n', time: 1.5 },
+            { note: 'C4', duration: '2n', time: 2.5 },
+            { note: 'F4', duration: '2n.', time: 3 },
+            { note: 'E4', duration: '8n', time: 3.75 },
+            { note: 'G4', duration: '2n', time: 4 },
+            { note: 'F4', duration: '2n', time: 5 },
+            { note: 'A4', duration: '2n.', time: 5.5 },
+            { note: 'G4', duration: '8n', time: 6.25 },
+            { note: 'A4', duration: '2n', time: 6.5 },
+            { note: 'Bb4', duration: '2n', time: 7.5 },
+            { note: 'A4', duration: '4n', time: 8 },
+            { note: 'G4', duration: '4n', time: 8.5 },
+            { note: 'F4', duration: '2n', time: 9 },
+        ];
+
+        let isPlaying = false;
+        let loopId = null;
+
+        function playMelody() {
+            const now = Tone.now();
+            melody.forEach(({ note, duration, time }) => {
+                synth.triggerAttackRelease(note, duration, now + time);
+            });
         }
+
+        document.getElementById('playBtn').addEventListener('click', async () => {
+            await Tone.start();
+            const btn = document.getElementById('playBtn');
+
+            if (isPlaying) {
+                Tone.Transport.stop();
+                Tone.Transport.cancel();
+                btn.textContent = 'Play Music';
+                isPlaying = false;
+            } else {
+                Tone.Transport.scheduleRepeat((time) => {
+                    melody.forEach(({ note, duration, time: noteTime }) => {
+                        synth.triggerAttackRelease(note, duration, time + noteTime);
+                    });
+                }, 10);
+                Tone.Transport.start();
+                btn.textContent = 'Stop Music';
+                isPlaying = true;
+            }
+        });
     </script>
 </body>
 </html>
