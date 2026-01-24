@@ -174,6 +174,10 @@
             left: 195px;
         }
 
+        #discoPlayer {
+            left: 240px;
+        }
+
         .play-btn {
             background: none;
             border: 1px solid #c4b59d;
@@ -410,6 +414,9 @@
     <div class="music-player" id="cakePlayer">
         <button class="play-btn" id="cakeBtn">🎂</button>
     </div>
+    <div class="music-player" id="discoPlayer">
+        <button class="play-btn" id="discoBtn">🪩</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
@@ -454,6 +461,15 @@
             'G4', 'C5', 'E5', 'G5',
         ];
 
+        // Disco - driving techno bassline and arpeggios
+        const discoBass = ['E2', 'E2', 'E3', 'E2', 'G2', 'G2', 'A2', 'B2'];
+        const discoArp = [
+            'E4', 'G4', 'B4', 'E5',
+            'D5', 'B4', 'G4', 'E4',
+            'A4', 'C5', 'E5', 'A5',
+            'G5', 'E5', 'C5', 'A4',
+        ];
+
         // Easter eggs: type "ring", "love", "lips", "flower", "cake"
         let typedKeys = '';
         document.addEventListener('keydown', async (e) => {
@@ -490,6 +506,12 @@
                 typedKeys = '';
                 await Tone.start();
                 playCakeJingle();
+            }
+            if (typedKeys.includes('disco')) {
+                document.getElementById('discoPlayer').classList.add('visible');
+                typedKeys = '';
+                await Tone.start();
+                playDiscoTrack();
             }
         });
 
@@ -720,6 +742,88 @@
         document.getElementById('cakeBtn').addEventListener('click', async () => {
             await Tone.start();
             playCakeJingle();
+        });
+
+        // Disco - full techno track with bass and arp
+        let discoBasssynth = null;
+        let discoArpSynth = null;
+        let discoPlaying = false;
+
+        function spawnDiscoBalls() {
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const disco = document.createElement('div');
+                    disco.className = 'falling-ring';
+                    disco.textContent = '🪩';
+                    disco.style.left = Math.random() * 100 + 'vw';
+                    disco.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(disco);
+                    setTimeout(() => disco.remove(), 5000);
+                }, i * 150);
+            }
+        }
+
+        async function playDiscoTrack() {
+            if (discoPlaying) return;
+            discoPlaying = true;
+
+            if (!discoBasssynth) {
+                // Bass synth with filter
+                const bassFilter = new Tone.Filter(200, 'lowpass').toDestination();
+                discoBasssynth = new Tone.Synth({
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.3, release: 0.1 }
+                }).connect(bassFilter);
+                discoBasssynth.volume.value = -6;
+
+                // Arp synth with auto-filter for disco sweep
+                const autoFilter = new Tone.AutoFilter({
+                    frequency: '4n',
+                    baseFrequency: 400,
+                    octaves: 4
+                }).toDestination();
+                autoFilter.start();
+
+                const arpDelay = new Tone.PingPongDelay('8n', 0.3).connect(autoFilter);
+                arpDelay.wet.value = 0.25;
+
+                discoArpSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.2 }
+                }).connect(arpDelay);
+                discoArpSynth.volume.value = -12;
+            }
+
+            Tone.Transport.bpm.value = 128;
+            const sixteenth = Tone.Time('16n').toSeconds();
+            const eighth = Tone.Time('8n').toSeconds();
+
+            // Play 4 bars
+            for (let bar = 0; bar < 4; bar++) {
+                const barStart = Tone.now() + (bar * 8 * eighth);
+
+                // Bass pattern (8th notes)
+                discoBass.forEach((note, i) => {
+                    discoBasssynth.triggerAttackRelease(note, '8n', barStart + (i * eighth));
+                });
+
+                // Arp pattern (16th notes)
+                discoArp.forEach((note, i) => {
+                    discoArpSynth.triggerAttackRelease(note, '16n', barStart + (i * sixteenth));
+                });
+            }
+
+            spawnDiscoBalls();
+
+            // Reset playing flag after track ends
+            setTimeout(() => {
+                discoPlaying = false;
+            }, 4 * 8 * eighth * 1000 + 500);
+        }
+
+        document.getElementById('discoBtn').addEventListener('click', async () => {
+            await Tone.start();
+            playDiscoTrack();
         });
     </script>
 </body>
