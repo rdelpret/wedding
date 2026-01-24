@@ -478,7 +478,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.18</span>
+        <span class="version">v.0.1.19</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1414,20 +1414,25 @@
             playXmasJingle();
         });
 
-        // Music - groovy dance melody
+        // Music - 80s synth-pop party melody
         let musicSynth2 = null;
         let musicBass2 = null;
 
-        // Groovy "music makes people come together" inspired melody with rhythm
+        // Snappy 80s party melody with rhythm [note, duration in 16ths]
         const musicMelody2 = [
-            ['G4', 1], ['G4', 1], ['F4', 1], ['E4', 1], ['D4', 2],
-            ['G4', 1], ['G4', 1], ['F4', 1], ['E4', 1], ['D4', 2],
-            ['C4', 1], ['D4', 1], ['E4', 1], ['F4', 1], ['G4', 2], ['G4', 2],
+            ['E5', 2], ['E5', 2], ['D5', 2], ['C5', 2],
+            ['E5', 2], ['E5', 2], ['D5', 2], ['C5', 2],
+            ['G5', 2], ['G5', 1], ['G5', 1], ['F5', 2], ['E5', 2],
+            ['D5', 2], ['E5', 2], ['C5', 4],
+            ['E5', 2], ['E5', 2], ['D5', 2], ['C5', 2],
+            ['G5', 4], ['E5', 4],
         ];
 
         const musicBassLine2 = [
-            ['C2', 1], ['C2', 1], ['G2', 1], ['G2', 1],
-            ['A2', 1], ['A2', 1], ['E2', 1], ['E2', 1],
+            ['C2', 2], ['C3', 2], ['C2', 2], ['C3', 2],
+            ['G2', 2], ['G3', 2], ['G2', 2], ['G3', 2],
+            ['A2', 2], ['A3', 2], ['A2', 2], ['A3', 2],
+            ['F2', 2], ['F3', 2], ['G2', 2], ['G3', 2],
         ];
 
         function spawnMusicNotes() {
@@ -1447,42 +1452,40 @@
 
         async function playMusicJingle() {
             if (!musicSynth2) {
-                // Funky synth sound
-                const musicDelay = new Tone.PingPongDelay('8n', 0.2).toDestination();
-                musicDelay.wet.value = 0.2;
+                // Snappy 80s saw wave
+                const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination();
+                chorus.start();
 
                 musicSynth2 = new Tone.Synth({
-                    oscillator: { type: 'square' },
-                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.3, release: 0.3 }
-                }).connect(musicDelay);
-                musicSynth2.volume.value = -8;
+                    oscillator: { type: 'fatsawtooth', spread: 30, count: 3 },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.1 }
+                }).connect(chorus);
+                musicSynth2.volume.value = -10;
 
-                // Groovy bass
-                const bassFilter = new Tone.Filter(250, 'lowpass').toDestination();
+                // Punchy 80s bass
+                const bassFilter = new Tone.Filter(300, 'lowpass').toDestination();
                 musicBass2 = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
-                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.5, release: 0.2 }
+                    envelope: { attack: 0.01, decay: 0.1, sustain: 0.3, release: 0.1 }
                 }).connect(bassFilter);
-                musicBass2.volume.value = -6;
+                musicBass2.volume.value = -8;
             }
 
-            const eighth = Tone.Time('8n').toSeconds();
+            const sixteenth = Tone.Time('16n').toSeconds();
 
             // Play melody
             let time = Tone.now();
             musicMelody2.forEach(([note, dur]) => {
-                musicSynth2.triggerAttackRelease(note, eighth * dur * 0.9, time);
-                time += eighth * dur;
+                musicSynth2.triggerAttackRelease(note, sixteenth * dur * 0.8, time);
+                time += sixteenth * dur;
             });
 
-            // Play bass loop twice
+            // Play bass
             let bassTime = Tone.now();
-            for (let rep = 0; rep < 2; rep++) {
-                musicBassLine2.forEach(([note, dur]) => {
-                    musicBass2.triggerAttackRelease(note, eighth * dur * 0.8, bassTime);
-                    bassTime += eighth * dur;
-                });
-            }
+            musicBassLine2.forEach(([note, dur]) => {
+                musicBass2.triggerAttackRelease(note, sixteenth * dur * 0.7, bassTime);
+                bassTime += sixteenth * dur;
+            });
 
             spawnMusicNotes();
         }
