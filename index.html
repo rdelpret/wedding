@@ -463,7 +463,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.12</span>
+        <span class="version">v.0.1.13</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -592,7 +592,7 @@
         document.addEventListener('keydown', async (e) => {
             if (e.target.tagName === 'INPUT') return;
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 13) typedKeys = typedKeys.slice(-13);
+            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
 
             if (typedKeys.includes('ring')) {
                 document.getElementById('musicPlayer').classList.add('visible');
@@ -660,7 +660,7 @@
                 await Tone.start();
                 playChapelJingle();
             }
-            if (typedKeys.includes('ringoandmango')) {
+            if (typedKeys.includes('mango')) {
                 // Reveal all buttons and play dog song
                 document.querySelectorAll('.music-player').forEach(p => p.classList.add('visible'));
                 typedKeys = '';
