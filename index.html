@@ -434,7 +434,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.454abaf</span>
+        <span class="version">v.b721ccd</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -1144,6 +1144,7 @@
         let swirlSkank = null;
         let swirlKick = null;
         let swirlSnare = null;
+        let swirlHihat = null;
         let swirlPlaying = false;
 
         const swirlBassPat = ['E1', 'E1', 'G1', 'A1', 'E1', 'E1', 'B1', 'A1'];
@@ -1215,6 +1216,14 @@
                     envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.1 }
                 }).connect(snareFilter);
                 swirlSnare.volume.value = -10;
+
+                // Hi-hat
+                const hihatFilter = new Tone.Filter(8000, 'highpass').toDestination();
+                swirlHihat = new Tone.NoiseSynth({
+                    noise: { type: 'white' },
+                    envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.02 }
+                }).connect(hihatFilter);
+                swirlHihat.volume.value = -18;
             }
 
             Tone.Transport.bpm.value = 140;
@@ -1258,6 +1267,11 @@
                 // Snare on 2 and 4
                 swirlSnare.triggerAttackRelease('8n', barStart + (2 * eighth));
                 swirlSnare.triggerAttackRelease('8n', barStart + (6 * eighth));
+
+                // Hi-hat on 8th notes
+                for (let i = 0; i < 8; i++) {
+                    swirlHihat.triggerAttackRelease('32n', barStart + (i * eighth));
+                }
             }
 
             spawnSpirals();
