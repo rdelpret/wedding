@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel & Accommodations | Diana & Robbie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: auto;
+            overscroll-behavior: none;
+        }
+
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #f5f0e6;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #6a6a6a;
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4c4c4;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 25px;
+        }
+
+        .content-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .content-text a {
+            color: #4a4a4a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .content-text a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        .notice-box {
+            background-color: rgba(196, 181, 157, 0.2);
+            border: 1px solid #c4b59d;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+
+        .notice-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 12px;
+        }
+
+        .notice-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #5a5a5a;
+        }
+
+        .concierge-box {
+            background-color: rgba(196, 181, 157, 0.1);
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .concierge-box .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .concierge-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .concierge-email {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .concierge-email a {
+            color: #4a4a4a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .concierge-email a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 10px;
+            text-align: center;
+            background-color: #f5f0e6;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px 25px;
+            z-index: 100;
+        }
+
+        .nav a {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .nav a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            body {
+                padding: 80px 15px 40px;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+                letter-spacing: 5px;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 0.85rem;
+                letter-spacing: 4px;
+            }
+
+            .content-text,
+            .concierge-text {
+                font-size: 1.1rem;
+            }
+
+            .nav {
+                gap: 10px 15px;
+                padding: 12px 8px;
+            }
+
+            .nav a {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            .page-title {
+                font-size: 2rem;
+                letter-spacing: 10px;
+            }
+
+            .page-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                letter-spacing: 6px;
+            }
+
+            .content-text,
+            .concierge-text {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="photo-gallery.html">Photo Gallery</a>
+        <a href="venue.html">The Venue</a>
+        <a href="city.html">The City</a>
+        <a href="travel.html">Travel</a>
+        <a href="schedule.html">Schedule</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">Travel & Accommodations</h1>
+        <p class="page-subtitle">Getting to Porto</p>
+
+        <div class="divider"></div>
+
+        <div class="notice-box">
+            <p class="notice-title">Please Do Not Book Yet</p>
+            <p class="notice-text">We are still finalizing travel and accommodation details for our guests. Please check back soon for booking information and special rates.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="concierge-box">
+            <h2 class="section-title">Concierge Support</h2>
+            <p class="concierge-text">
+                To help you make the most of your time in Portugal for our celebration, Mary Me dedicated concierge service is at your disposal for recommendations on what to visit, where to eat, and where to stay. Please don't hesitate to reach out to them at:
+            </p>
+            <p class="concierge-email">
+                <a href="mailto:concierge@maryme.pt">concierge@maryme.pt</a>
+            </p>
+        </div>
+
+        <div class="divider"></div>
+    </div>
+</body>
+</html>

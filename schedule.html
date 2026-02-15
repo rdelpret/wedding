@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Story | Diana & Robert</title>
+    <title>Schedule | Diana & Robbie</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
         .container {
             text-align: center;
             width: 100%;
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -47,6 +47,14 @@
             letter-spacing: 8px;
             text-transform: uppercase;
             color: #3d3d3d;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #6a6a6a;
             margin-bottom: 40px;
         }
 
@@ -57,22 +65,49 @@
             margin: 40px auto;
         }
 
-        .story-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            line-height: 1.9;
-            color: #4a4a4a;
+        .timeline {
             text-align: left;
-            margin-bottom: 30px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .story-photo {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            margin: 30px auto;
-            display: block;
-            object-fit: cover;
+        .timeline-item {
+            margin-bottom: 40px;
+            padding-left: 30px;
+            border-left: 1px solid #c4b59d;
+        }
+
+        .timeline-date {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 8px;
+        }
+
+        .timeline-event {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #4a4a4a;
+        }
+
+        .timeline-location {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #6a6a6a;
+            margin-top: 4px;
+        }
+
+        .forthcoming {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #6a6a6a;
+            text-align: center;
         }
 
         .nav {
@@ -118,8 +153,25 @@
                 letter-spacing: 5px;
             }
 
-            .story-text {
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .timeline-date {
+                font-size: 0.8rem;
+                letter-spacing: 2px;
+            }
+
+            .timeline-event {
                 font-size: 1.1rem;
+            }
+
+            .timeline-location {
+                font-size: 1rem;
+            }
+
+            .forthcoming {
+                font-size: 1rem;
             }
 
             .nav {
@@ -131,7 +183,6 @@
                 font-size: 0.6rem;
                 letter-spacing: 2px;
             }
-
         }
 
         /* Desktop */
@@ -141,8 +192,25 @@
                 letter-spacing: 10px;
             }
 
-            .story-text {
-                font-size: 1.3rem;
+            .page-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .timeline-date {
+                font-size: 0.9rem;
+                letter-spacing: 4px;
+            }
+
+            .timeline-event {
+                font-size: 1.4rem;
+            }
+
+            .timeline-location {
+                font-size: 1.2rem;
+            }
+
+            .forthcoming {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -158,33 +226,33 @@
         <a href="schedule.html">Schedule</a>
     </nav>
     <div class="container">
-        <h1 class="page-title">Our Story</h1>
+        <h1 class="page-title">Schedule</h1>
+        <p class="page-subtitle">Wedding Weekend</p>
 
         <div class="divider"></div>
 
-        <p class="story-text">
-            Diana and Robbie's story began in Colorado, where they quickly discovered a shared love for dogs and music. Diana's kind and loving spirit captivated Robbie from the start, while his creativity and zest for life drew her in just as deeply.
-        </p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <p class="timeline-date">Wednesday, June 2nd, 2027</p>
+                <p class="timeline-event">Welcome Events</p>
+            </div>
 
-        <img class="story-photo" src="our-story-gallery/early days.jpeg" alt="Diana and Robbie in the early days">
+            <div class="timeline-item">
+                <p class="timeline-date">Friday, June 4th, 2027</p>
+                <p class="timeline-event">Wedding Ceremony</p>
+                <p class="timeline-location">Pestana Palacio do Freixo, Porto</p>
+            </div>
 
-        <p class="story-text">
-            Together, they've built a life filled with adventure and love. They share their home with two beloved dogs, Ringo and Mango, who have become the best of friends. From trying new foods to exploring new places, Diana and Robbie have formed a bond that grows stronger with each passing day.
-        </p>
+            <div class="timeline-item">
+                <p class="timeline-date">Friday, June 4th, 2027</p>
+                <p class="timeline-event">Reception</p>
+                <p class="timeline-location">Pestana Palacio do Freixo, Porto</p>
+            </div>
+        </div>
 
-        <img class="story-photo" src="our-story-gallery/dog.JPG" alt="Ringo and Mango">
+        <div class="divider"></div>
 
-        <p class="story-text">
-            In 2024, they traveled to Portugal and fell head over heels for its beauty, culture, and magic. They knew instantly that they wanted to share this special place with the people they love most. The following year, in 2025, they took another big step and purchased a house together in Lakewood, Colorado.
-        </p>
-
-        <img class="story-photo" src="our-story-gallery/new house.jpeg" alt="Diana and Robbie's new home">
-
-        <p class="story-text">
-            On a quiet November evening in 2025, Diana and Robbie were decorating their Christmas tree together. They have a tradition of collecting an ornament from everywhere they travel, and as they unwrapped each one, memories came flooding back. When they reached the ornaments from Portugal, Robbie got down on one knee and asked Diana to spend the rest of their lives together. She said yes, and now they can't wait to celebrate their love with all of you in the place where so many of those memories began.
-        </p>
-
-        <img class="story-photo" src="our-story-gallery/engagement.jpeg" alt="The engagement">
+        <p class="forthcoming">Full Schedule Coming Soon.</p>
 
         <div class="divider"></div>
     </div>
