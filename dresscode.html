@@ -302,6 +302,120 @@
             text-decoration-color: #3d3d3d;
         }
 
+        /* Mood board trigger + modal + lightbox */
+        .mood-trigger {
+            display: inline-block;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .mood-trigger:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
+        .mood-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(61, 61, 61, 0.35);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 600;
+            padding: 20px;
+        }
+
+        .mood-overlay.active {
+            display: flex;
+        }
+
+        .mood-card {
+            position: relative;
+            background: #f5f0e6;
+            max-width: 720px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px 35px 35px;
+            box-shadow: 0 10px 40px rgba(61, 61, 61, 0.25);
+            text-align: center;
+        }
+
+        .mood-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #5a5a5a;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .mood-close:hover {
+            color: #3d3d3d;
+        }
+
+        .mood-card .section-title {
+            margin-bottom: 15px;
+        }
+
+        .mood-divider {
+            width: 40px;
+            height: 1px;
+            background-color: #c4b59d;
+            margin: 0 auto 25px;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .mood-grid img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .mood-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(61, 61, 61, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 700;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .mood-lightbox.active {
+            display: flex;
+        }
+
+        .mood-lightbox img {
+            max-width: 92vw;
+            max-height: 90vh;
+            object-fit: contain;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
         /* Mobile */
         @media (max-width: 480px) {
             body {
@@ -365,6 +479,10 @@
 
             .content-text {
                 font-size: 1.3rem;
+            }
+
+            .mood-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -440,6 +558,7 @@
             <span class="swatch" style="background:#3f6a8a"></span>
             <span class="swatch" style="background:#6a4d8a"></span>
         </div>
+        <button class="mood-trigger" id="moodTrigger" type="button">View Dress Code Inspiration</button>
         <p class="content-text">
             Above all, we want you to feel wonderful. If a tuxedo isn't in your closet, please don't rush out to buy one, come elegant, comfortable, and ready to celebrate.
         </p>
@@ -491,5 +610,77 @@
 
         <div class="divider"></div>
     </div>
+
+    <div class="mood-overlay" id="moodModal">
+        <div class="mood-card">
+            <span class="mood-close" id="moodClose">&times;</span>
+            <h2 class="section-title">Dress Code Inspiration</h2>
+            <div class="mood-divider"></div>
+            <div class="mood-grid" id="moodGrid">
+                <img src="dresscode-gallery/thumbs/mood-01.jpg" data-full="dresscode-gallery/mood-01.jpg" alt="Dress code inspiration 1" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-02.jpg" data-full="dresscode-gallery/mood-02.jpg" alt="Dress code inspiration 2" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-03.jpg" data-full="dresscode-gallery/mood-03.jpg" alt="Dress code inspiration 3" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-04.jpg" data-full="dresscode-gallery/mood-04.jpg" alt="Dress code inspiration 4" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-05.jpg" data-full="dresscode-gallery/mood-05.jpg" alt="Dress code inspiration 5" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-06.jpg" data-full="dresscode-gallery/mood-06.jpg" alt="Dress code inspiration 6" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-07.jpg" data-full="dresscode-gallery/mood-07.jpg" alt="Dress code inspiration 7" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-08.jpg" data-full="dresscode-gallery/mood-08.jpg" alt="Dress code inspiration 8" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-09.jpg" data-full="dresscode-gallery/mood-09.jpg" alt="Dress code inspiration 9" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-10.jpg" data-full="dresscode-gallery/mood-10.jpg" alt="Dress code inspiration 10" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-11.jpg" data-full="dresscode-gallery/mood-11.jpg" alt="Dress code inspiration 11" loading="lazy">
+                <img src="dresscode-gallery/thumbs/mood-12.jpg" data-full="dresscode-gallery/mood-12.jpg" alt="Dress code inspiration 12" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <div class="mood-lightbox" id="moodLightbox">
+        <img src="" alt="Dress code inspiration, full size" id="moodLightboxImg">
+    </div>
+
+    <script>
+        (function () {
+            var trigger = document.getElementById('moodTrigger');
+            var modal = document.getElementById('moodModal');
+            var closeBtn = document.getElementById('moodClose');
+            var grid = document.getElementById('moodGrid');
+            var lightbox = document.getElementById('moodLightbox');
+            var lightboxImg = document.getElementById('moodLightboxImg');
+
+            trigger.addEventListener('click', function () {
+                modal.classList.add('active');
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            grid.addEventListener('click', function (e) {
+                if (e.target.tagName === 'IMG') {
+                    lightboxImg.src = e.target.getAttribute('data-full');
+                    lightbox.classList.add('active');
+                }
+            });
+
+            lightbox.addEventListener('click', function () {
+                lightbox.classList.remove('active');
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    if (lightbox.classList.contains('active')) {
+                        lightbox.classList.remove('active');
+                    } else {
+                        modal.classList.remove('active');
+                    }
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
