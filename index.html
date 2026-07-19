@@ -369,6 +369,83 @@
             color: #3d3d3d;
         }
 
+        .announce-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(61, 61, 61, 0.35);
+            z-index: 600;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .announce-overlay.active {
+            display: flex;
+        }
+
+        .announce-card {
+            background-color: #f5f0e6;
+            border: 1px solid #c4b59d;
+            padding: 40px 35px 35px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .announce-close {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            font-size: 1.3rem;
+            color: #5a5a5a;
+            cursor: pointer;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+        }
+
+        .announce-close:hover {
+            color: #3d3d3d;
+        }
+
+        .announce-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            margin-bottom: 8px;
+        }
+
+        .announce-divider {
+            width: 30px;
+            height: 1px;
+            background-color: #c4b59d;
+            margin: 18px auto;
+        }
+
+        .announce-item {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #4a4a4a;
+            margin-bottom: 16px;
+        }
+
+        .announce-item a {
+            color: #3d3d3d;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .announce-item a:hover {
+            text-decoration-color: #3d3d3d;
+        }
+
         .hunt-tab {
             position: fixed;
             left: 0;
@@ -623,7 +700,7 @@
         </p>
 
         <span class="webmaster">Webdesign: Robert DelPrete</span>
-        <span class="version">v.0.1.42</span>
+        <span class="version">v.0.1.43</span>
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -744,6 +821,17 @@
                     🔊 Turn your sound on for the full experience!
                 </p>
             </div>
+        </div>
+    </div>
+
+    <!-- Announcement Modal -->
+    <div class="announce-overlay" id="announceModal">
+        <div class="announce-card">
+            <span class="announce-close" id="announceClose">&times;</span>
+            <h2 class="announce-title">New Updates!</h2>
+            <div class="announce-divider"></div>
+            <p class="announce-item">&#10024; The dress code is up &mdash; <a href="dresscode.html">Black Tie Preferred</a></p>
+            <p class="announce-item">&#127976; Hotel booking opens around August 2026 &mdash; and Pestana Douro Riverside is <a href="travel.html">bookable now</a> as a budget-friendlier option</p>
         </div>
     </div>
 
@@ -957,11 +1045,24 @@
             document.getElementById('huntModal').classList.add('active');
             document.getElementById('huntTab').style.display = 'none';
         });
+        // Announcement popup: shows on every visit
+        setTimeout(() => {
+            document.getElementById('announceModal').classList.add('active');
+        }, 1000);
+        document.getElementById('announceClose').addEventListener('click', () => {
+            document.getElementById('announceModal').classList.remove('active');
+        });
+        document.getElementById('announceModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('announceModal')) {
+                document.getElementById('announceModal').classList.remove('active');
+            }
+        });
         // Close modals with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.getElementById('adminModal').classList.remove('active');
                 document.getElementById('huntModal').classList.remove('active');
+                document.getElementById('announceModal').classList.remove('active');
                 document.getElementById('huntTab').style.display = 'block';
             }
         });
