@@ -306,23 +306,22 @@
         .mood-trigger {
             display: inline-block;
             font-family: 'Josefin Sans', sans-serif;
-            font-weight: 300;
-            font-size: 0.8rem;
+            font-weight: 400;
+            font-size: 0.85rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #5a5a5a;
-            text-decoration: underline;
-            text-decoration-color: #c4b59d;
-            text-underline-offset: 4px;
-            background: none;
-            border: none;
+            color: #3d3d3d;
+            background: rgba(196, 181, 157, 0.15);
+            border: 1px solid #c4b59d;
+            padding: 14px 28px;
             cursor: pointer;
             margin-bottom: 30px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
         .mood-trigger:hover {
-            color: #3d3d3d;
-            text-decoration-color: #3d3d3d;
+            background: #c4b59d;
+            color: #f5f0e6;
         }
 
         .mood-overlay {
