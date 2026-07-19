@@ -161,7 +161,7 @@
             top: 18px;
             width: 2px;
             height: 26px;
-            background: #3d3d3d;
+            background: #a64d79;
         }
 
         .gown-strap-left { left: 58px; transform: rotate(14deg); }
@@ -174,7 +174,7 @@
             transform: translateX(-50%);
             width: 52px;
             height: 46px;
-            background: #3d3d3d;
+            background: #a64d79;
             clip-path: polygon(6% 0, 94% 0, 78% 100%, 22% 100%);
         }
 
@@ -196,7 +196,7 @@
             transform: translateX(-50%);
             width: 120px;
             height: 112px;
-            background: #3d3d3d;
+            background: #a64d79;
             clip-path: polygon(38% 0, 62% 0, 100% 94%, 88% 100%, 50% 96%, 12% 100%, 0 94%);
         }
 
@@ -259,37 +259,6 @@
             width: 44px;
             height: 44px;
             position: relative;
-        }
-
-        /* Block heel glyph: sole line, chunky heel, ankle strap */
-        .heel-sole {
-            position: absolute;
-            left: 4px;
-            bottom: 10px;
-            width: 34px;
-            height: 3px;
-            background: #3d3d3d;
-            transform: rotate(-12deg);
-        }
-
-        .heel-block {
-            position: absolute;
-            right: 6px;
-            bottom: 2px;
-            width: 9px;
-            height: 13px;
-            background: #c4b59d;
-        }
-
-        .heel-strap {
-            position: absolute;
-            right: 4px;
-            bottom: 16px;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #3d3d3d;
-            border-bottom: none;
-            border-radius: 10px 10px 0 0;
         }
 
         /* Wrap/layer glyph: folded shawl */
@@ -469,9 +438,14 @@
             </div>
             <div class="tip-item">
                 <div class="tip-glyph" aria-hidden="true">
-                    <div class="heel-sole"></div>
-                    <div class="heel-block"></div>
-                    <div class="heel-strap"></div>
+                    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                        <!-- shoe body: wedge from toe to ankle with concave arch -->
+                        <path d="M4 36 L30 10 L34 12 L34 26 L28 26 C20 32 12 35 4 36 Z" fill="#3d3d3d"/>
+                        <!-- block heel -->
+                        <polygon points="29,26 34,26 33,40 30,40" fill="#c4b59d"/>
+                        <!-- toe pad -->
+                        <path d="M4 36 C10 35.5 14 34.5 17 33 L18 36.5 C13 38 8 38.5 4 38.5 Z" fill="#3d3d3d"/>
+                    </svg>
                 </div>
                 <p class="tip-text">The pal&aacute;cio has cobblestones and outdoor terraces &mdash; block heels or wedges will treat you far better than stilettos.</p>
             </div>
