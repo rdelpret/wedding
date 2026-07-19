@@ -27,6 +27,19 @@ Content:
   - The palácio has cobblestones and outdoor terraces — block heels or wedges
     recommended over stilettos
 
+### Stylized CSS graphics
+
+Elegant, modern illustrations of the attire built entirely with HTML/CSS shapes
+(no image files, no external libraries):
+- A pair of hero silhouettes side by side: a tuxedo figure (lapels, bow tie,
+  shirt studs) and a gown figure (flowing A-line silhouette) — minimalist,
+  art-deco-leaning line/shape style in the site palette (#3d3d3d shapes,
+  #c4b59d accents on #f5f0e6)
+- Small accent glyphs for the tips section (e.g., a strappy block heel, a
+  folded wrap/layer) in the same style
+- Graphics are decorative (aria-hidden) with the text carrying the information
+- Responsive: scale down gracefully at the 480px breakpoint
+
 Navigation: add "Dress Code" link to the nav on **all pages** (index, our-story,
 photo-gallery, venue, city, travel, schedule, dresscode), placed between
 "The City" and "Travel".
