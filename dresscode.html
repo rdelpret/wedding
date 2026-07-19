@@ -147,93 +147,12 @@
             color: #5a5a5a;
         }
 
-        /* Tuxedo: shirt, two jacket panels with lapels, bow tie, studs */
-        .tux-shirt {
-            position: absolute;
-            left: 50%;
-            top: 30px;
-            transform: translateX(-50%);
-            width: 44px;
-            height: 150px;
-            background: #fdfbf6;
-            clip-path: polygon(0 0, 100% 0, 88% 100%, 12% 100%);
+        /* Tuxedo: inline SVG */
+        .tux-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
-
-        .tux-jacket-left,
-        .tux-jacket-right {
-            position: absolute;
-            top: 22px;
-            width: 62px;
-            height: 168px;
-            background: #3d3d3d;
-        }
-
-        .tux-jacket-left {
-            left: 14px;
-            clip-path: polygon(30% 0, 100% 18%, 78% 45%, 100% 42%, 92% 100%, 0 100%, 0 14%);
-        }
-
-        .tux-jacket-right {
-            right: 14px;
-            transform: scaleX(-1);
-            clip-path: polygon(30% 0, 100% 18%, 78% 45%, 100% 42%, 92% 100%, 0 100%, 0 14%);
-        }
-
-        .tux-bowtie {
-            position: absolute;
-            left: 50%;
-            top: 34px;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 12px;
-        }
-
-        .tux-bowtie::before,
-        .tux-bowtie::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 13px;
-            height: 12px;
-            background: #3d3d3d;
-        }
-
-        .tux-bowtie::before {
-            left: 0;
-            clip-path: polygon(0 0, 100% 40%, 100% 60%, 0 100%);
-        }
-
-        .tux-bowtie::after {
-            right: 0;
-            clip-path: polygon(100% 0, 0 40%, 0 60%, 100% 100%);
-        }
-
-        .tux-knot {
-            position: absolute;
-            left: 50%;
-            top: 36px;
-            transform: translateX(-50%);
-            width: 7px;
-            height: 8px;
-            background: #c4b59d;
-            border-radius: 2px;
-            z-index: 2;
-        }
-
-        .tux-stud {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #c4b59d;
-            z-index: 2;
-        }
-
-        .stud-1 { top: 62px; }
-        .stud-2 { top: 82px; }
-        .stud-3 { top: 102px; }
 
         /* Gown: straps, bodice, gold waistband, A-line skirt */
         .gown-strap-left,
@@ -480,14 +399,30 @@
         <div class="attire-row" aria-hidden="true">
             <div class="attire-figure">
                 <div class="attire-canvas">
-                    <div class="tux-shirt"></div>
-                    <div class="tux-jacket-left"></div>
-                    <div class="tux-jacket-right"></div>
-                    <div class="tux-bowtie"></div>
-                    <div class="tux-knot"></div>
-                    <div class="tux-stud stud-1"></div>
-                    <div class="tux-stud stud-2"></div>
-                    <div class="tux-stud stud-3"></div>
+                    <svg class="tux-svg" viewBox="0 0 150 210" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(0,14)">
+                            <!-- shirt behind V -->
+                            <polygon points="60,26 90,26 75,108" fill="#fdfbf6"/>
+                            <!-- jacket panels (overlap at center below V) -->
+                            <path d="M63 28 L30 40 C26 70 30 95 32 120 C33 140 34 158 35 172 L76 176 L76 106 Z" fill="#3d3d3d"/>
+                            <path d="M87 28 L120 40 C124 70 120 95 118 120 C117 140 116 158 115 172 L74 176 L74 106 Z" fill="#3d3d3d"/>
+                            <!-- satin peak lapels -->
+                            <path d="M63 28 L56 46 L44 64 L53 72 L71 100 Z" fill="#4f4f4f"/>
+                            <path d="M87 28 L94 46 L106 64 L97 72 L79 100 Z" fill="#4f4f4f"/>
+                            <!-- shirt studs -->
+                            <circle cx="75" cy="54" r="2" fill="#c4b59d"/>
+                            <circle cx="75" cy="68" r="2" fill="#c4b59d"/>
+                            <circle cx="75" cy="82" r="2" fill="#c4b59d"/>
+                            <!-- closure button -->
+                            <circle cx="75" cy="114" r="2.6" fill="#c4b59d"/>
+                            <!-- bow tie with cream separation strokes -->
+                            <path d="M58 29 L72 34.5 L72 43 L58 48 C56 42 56 35 58 29 Z" fill="#3d3d3d" stroke="#f5f0e6" stroke-width="1.2"/>
+                            <path d="M92 29 L78 34.5 L78 43 L92 48 C94 42 94 35 92 29 Z" fill="#3d3d3d" stroke="#f5f0e6" stroke-width="1.2"/>
+                            <rect x="71.5" y="33" width="7" height="11" rx="2" fill="#c4b59d" stroke="#f5f0e6" stroke-width="1"/>
+                            <!-- pocket square -->
+                            <polygon points="38,98 50,98 44,90" fill="#c4b59d"/>
+                        </g>
+                    </svg>
                 </div>
                 <span class="attire-label">Tuxedo</span>
             </div>
