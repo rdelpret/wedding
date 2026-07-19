@@ -281,6 +281,28 @@
             clip-path: polygon(38% 0, 62% 0, 100% 94%, 88% 100%, 50% 96%, 12% 100%, 0 94%);
         }
 
+        .color-note {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.35rem;
+            color: #3d3d3d;
+            margin-bottom: 18px;
+        }
+
+        .color-swatches {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
         /* Tips box + glyphs */
         .tips-box {
             background-color: rgba(196, 181, 157, 0.15);
@@ -453,7 +475,7 @@
     </nav>
     <div class="container">
         <h1 class="page-title">Dress Code</h1>
-        <p class="page-subtitle">Black Tie Preferred</p>
+        <p class="page-subtitle">Formal &mdash; Black Tie Preferred</p>
 
         <div class="attire-row" aria-hidden="true">
             <div class="attire-figure">
@@ -484,8 +506,17 @@
         <div class="divider"></div>
 
         <p class="content-text">
-            We would love to see everyone dressed to the nines for our evening at the pal&aacute;cio. Black tie is preferred &mdash; for gentlemen, that means a tuxedo, though a dark formal suit with a tie is most welcome. For ladies, an evening gown or an elegant formal midi or cocktail dress is perfect.
+            We would love to see everyone dressed to the nines for our evening at the pal&aacute;cio. Formal, black tie preferred &mdash; think tuxedos, floor-length gowns, and elegant suits.
         </p>
+        <p class="color-note">Color and patterns are encouraged!</p>
+        <div class="color-swatches" aria-hidden="true">
+            <span class="swatch" style="background:#a64d79"></span>
+            <span class="swatch" style="background:#b23a3a"></span>
+            <span class="swatch" style="background:#c9a227"></span>
+            <span class="swatch" style="background:#7a8a3f"></span>
+            <span class="swatch" style="background:#3f6a8a"></span>
+            <span class="swatch" style="background:#6a4d8a"></span>
+        </div>
         <p class="content-text">
             Above all, we want you to feel wonderful. If a tuxedo isn't in your closet, please don't rush out to buy one &mdash; come elegant, comfortable, and ready to celebrate.
         </p>
