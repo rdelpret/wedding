@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+  Source for og-image.jpg, the link preview card.
+  Regenerate by rendering this at exactly 1200x630, see tools/README.md.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 1200px;
+            height: 630px;
+            display: flex;
+            background-color: #f5f0e6;
+            overflow: hidden;
+        }
+
+        .photo {
+            width: 46%;
+            height: 100%;
+            background-image: url('/bwengage.jpg');
+            background-size: cover;
+            /* Keeps both faces in frame once the sides are cropped away. */
+            background-position: 56% 22%;
+        }
+
+        .panel {
+            width: 54%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px;
+            text-align: center;
+        }
+
+        .kicker {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 19px;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: #6a6a6a;
+            margin-bottom: 34px;
+        }
+
+        .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 76px;
+            letter-spacing: 8px;
+            line-height: 1.1;
+            color: #3d3d3d;
+        }
+
+        .ampersand {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 40px;
+            color: #8a8a8a;
+            margin: 6px 0;
+        }
+
+        .rule {
+            width: 90px;
+            height: 1px;
+            background-color: #c4b59d;
+            margin: 36px 0;
+        }
+
+        .date {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 23px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #4a4a4a;
+            margin-bottom: 14px;
+        }
+
+        .place {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 25px;
+            letter-spacing: 1px;
+            color: #6a6a6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo"></div>
+    <div class="panel">
+        <p class="kicker">The Wedding Of</p>
+        <p class="name">Diana</p>
+        <p class="ampersand">and</p>
+        <p class="name">Robbie</p>
+        <div class="rule"></div>
+        <p class="date">June 4, 2027</p>
+        <p class="place">Porto, Portugal</p>
+    </div>
+</body>
+</html>
