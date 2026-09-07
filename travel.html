@@ -148,6 +148,118 @@
             text-align: center;
         }
 
+        .unlock {
+            border: 1px solid #c4b59d;
+            background-color: rgba(196, 181, 157, 0.2);
+            padding: 25px 30px;
+            margin: 0 0 25px;
+            text-align: center;
+        }
+
+        .unlock-label {
+            display: block;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            margin-bottom: 14px;
+        }
+
+        .unlock-prompt {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a5a5a;
+            margin-bottom: 18px;
+        }
+
+        .unlock-form {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* display:flex would otherwise beat the [hidden] attribute. */
+        .unlock-form[hidden] {
+            display: none;
+        }
+
+        .unlock-input {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-align: center;
+            color: #3d3d3d;
+            background-color: #f5f0e6;
+            border: 1px solid #c4b59d;
+            padding: 11px 14px;
+            width: 210px;
+            max-width: 100%;
+        }
+
+        .unlock-input:focus {
+            outline: none;
+            border-color: #3d3d3d;
+        }
+
+        .unlock-button {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            background-color: transparent;
+            border: 1px solid #3d3d3d;
+            padding: 11px 22px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .unlock-button:hover {
+            background-color: #3d3d3d;
+            color: #f5f0e6;
+        }
+
+        .unlock-button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .unlock-error,
+        .unlock-fallback {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #8a5f5f;
+            margin-top: 14px;
+        }
+
+        .unlock-secret {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+            letter-spacing: 6px;
+            color: #3d3d3d;
+        }
+
+        @media (max-width: 480px) {
+            .unlock {
+                padding: 20px;
+            }
+
+            .unlock-secret {
+                font-size: 1.2rem;
+                letter-spacing: 4px;
+            }
+        }
+
         .concierge-email a,
         .concierge-text a {
             color: #4a4a4a;
@@ -271,8 +383,8 @@
         <div class="divider"></div>
 
         <div class="notice-box">
-            <p class="notice-title">Please Hold Off On Booking</p>
-            <p class="notice-text">We will have special discount codes for our guests, arriving around August 2026. The hotels are technically taking reservations already, but please wait. We'll post all the details and the codes right here as soon as we have them.</p>
+            <p class="notice-title">Booking Codes</p>
+            <p class="notice-text">Our guest discount code for Pestana Pal&aacute;cio do Freixo is ready, so you can book the wedding hotel now. We do not have the discount code for Pestana Douro Riverside yet, and we'll post it right here as soon as we do.</p>
         </div>
 
         <div class="concierge-box">
@@ -280,8 +392,22 @@
             <p class="concierge-text">
                 Our celebration takes place at <a href="https://www.pestana.com/en/hotel/freixo-palace" target="_blank" rel="noopener">Pestana Pal&aacute;cio do Freixo</a>, which is also a five-star hotel. Staying there puts you right at the heart of the festivities.
             </p>
+            <div class="unlock" data-cipher="q+OniRayJKJ4vJcfk078uUNB0FXJrj5Ry89dwJErm52uMli2z3vnwx6RJfUWLxXAF3Fs 80CGQd10xDEwsRvTi++WN7RR5oOdR/eO85pA4HUQzdT/u1OVgdDfMT4+XPdFZ5mon0mn">
+                <span class="unlock-label">Freixo booking code for our guests</span>
+                <p class="unlock-prompt">Type Diana's new last name to reveal the discount code.</p>
+                <form class="unlock-form">
+                    <input class="unlock-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Diana's new last name">
+                    <button class="unlock-button" type="submit">Unlock</button>
+                </form>
+                <p class="unlock-error" hidden>That's not it. Try again, spaces and capitals don't matter.</p>
+                <p class="unlock-fallback" hidden>This browser can't unlock the code. Please reach out and we'll send it over.</p>
+                <p class="unlock-secret" hidden></p>
+            </div>
             <p class="concierge-text">
-                Looking for a less expensive option? <a href="https://www.pestana.com/en/hotel/pestana-douro" target="_blank" rel="noopener">Pestana Douro Riverside</a> sits on the river just minutes away. We expect guest discount codes for both hotels, so hold tight until they arrive.
+                Enter that code when you book to receive our discounted guest rate.
+            </p>
+            <p class="concierge-text">
+                Looking for a less expensive option? <a href="https://www.pestana.com/en/hotel/pestana-douro" target="_blank" rel="noopener">Pestana Douro Riverside</a> sits on the river just minutes away. We do not have a discount code for the Riverside yet. If you'd like to stay there, please hold off on booking until we can share it.
             </p>
         </div>
 
@@ -299,5 +425,6 @@
 
         <div class="divider"></div>
     </div>
+    <script src="unlock.js"></script>
 </body>
 </html>

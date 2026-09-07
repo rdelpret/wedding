@@ -202,6 +202,131 @@
             color: #5a5a5a;
         }
 
+        .unlock {
+            border: 1px solid #c4b59d;
+            background-color: rgba(196, 181, 157, 0.2);
+            padding: 25px 30px;
+            margin: 0 0 25px;
+            text-align: center;
+        }
+
+        .unlock-label {
+            display: block;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            margin-bottom: 14px;
+        }
+
+        .unlock-prompt {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a5a5a;
+            margin-bottom: 18px;
+        }
+
+        .unlock-form {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* display:flex would otherwise beat the [hidden] attribute. */
+        .unlock-form[hidden] {
+            display: none;
+        }
+
+        .unlock-input {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-align: center;
+            color: #3d3d3d;
+            background-color: #f5f0e6;
+            border: 1px solid #c4b59d;
+            padding: 11px 14px;
+            width: 210px;
+            max-width: 100%;
+        }
+
+        .unlock-input:focus {
+            outline: none;
+            border-color: #3d3d3d;
+        }
+
+        .unlock-button {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            background-color: transparent;
+            border: 1px solid #3d3d3d;
+            padding: 11px 22px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .unlock-button:hover {
+            background-color: #3d3d3d;
+            color: #f5f0e6;
+        }
+
+        .unlock-button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .unlock-error,
+        .unlock-fallback {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #8a5f5f;
+            margin-top: 14px;
+        }
+
+        .unlock-secret {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+            letter-spacing: 6px;
+            color: #3d3d3d;
+        }
+
+        @media (max-width: 480px) {
+            .unlock {
+                padding: 20px;
+            }
+
+            .unlock-secret {
+                font-size: 1.2rem;
+                letter-spacing: 4px;
+            }
+        }
+
+
+        .notice-text a {
+            color: #5a5a5a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .notice-text a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
         .nav {
             position: fixed;
             top: 0;
@@ -338,10 +463,21 @@
             <img src="venue.png" alt="Pestana Palacio do Freixo">
         </div>
 
-        <div class="notice-box">
-            <p class="notice-title">Please Do Not Book Yet</p>
-            <p class="notice-text">We are arranging a room block with special rates for our guests. Details will be shared soon. Please wait for our booking information before making any reservations.</p>
+        <div class="unlock" data-cipher="q+OniRayJKJ4vJcfk078uUNB0FXJrj5Ry89dwJErm52uMli2z3vnwx6RJfUWLxXAF3Fs 80CGQd10xDEwsRvTi++WN7RR5oOdR/eO85pA4HUQzdT/u1OVgdDfMT4+XPdFZ5mon0mn">
+            <span class="unlock-label">Guest booking code</span>
+            <p class="unlock-prompt">Type Diana's new last name to reveal the discount code.</p>
+            <form class="unlock-form">
+                <input class="unlock-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Diana's new last name">
+                <button class="unlock-button" type="submit">Unlock</button>
+            </form>
+            <p class="unlock-error" hidden>That's not it. Try again, spaces and capitals don't matter.</p>
+            <p class="unlock-fallback" hidden>This browser can't unlock the code. Please reach out and we'll send it over.</p>
+            <p class="unlock-secret" hidden></p>
         </div>
+
+        <p class="venue-text">
+            Enter that code when you book your room to receive our discounted guest rate. See our <a href="travel.html">travel page</a> for other places to stay.
+        </p>
 
         <p class="venue-text">
             Our celebration will take place at the magnificent Pestana Palacio do Freixo, an 18th-century baroque palace designed by the renowned Italian architect Nicolau Nasoni. Perched along the banks of the Douro River, this National Monument has been welcoming guests since 1910 and is recognised as a contributing site to Porto's UNESCO World Heritage status.
@@ -394,5 +530,6 @@
 
         <div class="divider"></div>
     </div>
+    <script src="unlock.js"></script>
 </body>
 </html>
