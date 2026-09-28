@@ -163,6 +163,86 @@
             text-align: center;
         }
 
+        .help-intro {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #6a6a6a;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .help-grid {
+            display: flex;
+            gap: 25px;
+            align-items: stretch;
+        }
+
+        .help-grid .concierge-box {
+            flex: 1;
+            margin: 30px 0 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #3d3d3d;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .help-tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #8a8a8a;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Pins the contact details to the bottom so the two cards line up. */
+        .help-contact {
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .help-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .help-line {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 4px;
+            /* Long email addresses must not run past the card edge. */
+            overflow-wrap: anywhere;
+        }
+
+        .help-line a {
+            color: #4a4a4a;
+            text-decoration: underline;
+            text-decoration-color: #c4b59d;
+            text-underline-offset: 3px;
+        }
+
+        .help-line a:hover {
+            color: #3d3d3d;
+            text-decoration-color: #3d3d3d;
+        }
+
         .unlock {
             border: 1px solid #c4b59d;
             background-color: rgba(196, 181, 157, 0.2);
@@ -342,6 +422,20 @@
             }
 
             .content-text,
+            .help-grid {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .help-line {
+                font-size: 0.72rem;
+                letter-spacing: 0;
+            }
+
+            .help-intro {
+                font-size: 1.05rem;
+            }
+
             .concierge-text {
                 font-size: 1.1rem;
             }
@@ -429,14 +523,33 @@
 
         <div class="divider"></div>
 
-        <div class="concierge-box">
-            <h2 class="section-title">Concierge Support</h2>
-            <p class="concierge-text">
-                To help you make the most of your time in Portugal for our celebration, Mary Me's dedicated concierge service is at your disposal for recommendations on what to visit, where to eat, and where to stay. Please don't hesitate to reach out to them at:
-            </p>
-            <p class="concierge-email">
-                <a href="mailto:concierge@maryme.pt">concierge@maryme.pt</a>
-            </p>
+        <h2 class="section-title">Help Planning Your Trip</h2>
+        <p class="help-intro">Two sets of hands, depending on how much help you would like.</p>
+
+        <div class="help-grid">
+            <div class="concierge-box">
+                <h3 class="help-title">Wedding Concierge</h3>
+                <p class="help-tag">Free to all our guests</p>
+                <p class="concierge-text">
+                    Mary Me's dedicated concierge service is at your disposal for recommendations on what to visit, where to eat, and where to stay in Porto. There is no charge, so please don't hesitate to reach out.
+                </p>
+                <div class="help-contact">
+                    <p class="help-line"><a href="mailto:concierge@maryme.pt">concierge@maryme.pt</a></p>
+                </div>
+            </div>
+
+            <div class="concierge-box">
+                <h3 class="help-title">Travel Agent</h3>
+                <p class="help-tag">For deeper trip planning</p>
+                <p class="concierge-text">
+                    Our dear friend Amanda has kindly offered her services as a travel agent. If you would like a hand with flights, extra stops, or building out the whole trip around the wedding, she is wonderful.
+                </p>
+                <div class="help-contact">
+                    <p class="help-name">Amanda Littleford</p>
+                    <p class="help-line"><a href="mailto:happiestadventuresbyamanda@gmail.com">happiestadventuresbyamanda@gmail.com</a></p>
+                    <p class="help-line"><a href="tel:+16154262343">+1 (615) 426-2343</a></p>
+                </div>
+            </div>
         </div>
 
         <div class="divider"></div>
